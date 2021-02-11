@@ -1,0 +1,30 @@
+spring:
+  # Conexión a la base de datos
+  datasource:
+    url: jdbc:mysql://localhost:3306/bd_ventas?serverTimezone=UTC
+    username: root
+    password: programador
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  # Configuraciones del JPA
+  jpa:
+    show-sql: true
+    hibernate:
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    #ddl-auto: update
+    #generate-ddl: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        format_sql: true
+    open-in-view: false
+# Manejo del log en modo trazabilidad para observar el comportamiento de las variables
+logging:
+  level:
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+# Configuraciones del Spring Security
+CDM:
+  app:
+    jwtExpirationMs: 86400000
+    jwtSecret: d16a249613a9969aca19846263698f0223eeccf0e64bd62284bac665671fcb17
