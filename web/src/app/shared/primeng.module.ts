@@ -6,6 +6,7 @@ import { MessageModule } from 'primeng/message';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { MenuModule } from 'primeng/menu';
+import { PanelModule } from 'primeng/panel';
 
 const myModules = [
   MessagesModule,
@@ -13,6 +14,7 @@ const myModules = [
   ToastModule,
   ConfirmDialogModule,
   MenuModule,
+  PanelModule,
 ];
 
 @NgModule({

@@ -1,0 +1,10 @@
+.container{
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+}
+
+.formulario_usuario{
+  width:50%;
+  max-width: 450px;
+}

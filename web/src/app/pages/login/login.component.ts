@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
   isLoginFailed = false;
   errorMessage = '';
   roles: string[] = [];
-  loginForm: FormGroup;
+  loginForm: FormGroup | undefined;
   constructor(
     private empleadoService: EmpleadoService,
     private router: Router,
