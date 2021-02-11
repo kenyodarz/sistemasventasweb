@@ -7,6 +7,7 @@ import { CommonService } from './common.service';
 import { API_URL } from "src/environments/environment";
 // Modelo
 import { Empleado } from "src/app/core/models/empleado";
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -14,4 +15,10 @@ import { Empleado } from "src/app/core/models/empleado";
 export class EmpleadoService extends CommonService<Empleado, number>{
   protected URL_API: string = `${API_URL}/empleados`;
   constructor(protected http: HttpClient) { super(http); }
+
+  validarEmpleado(credenciales: any):Observable<Empleado>{
+    return this.http.get<Empleado>(
+      `${this.URL_API}/validar/${credenciales.username}/${credenciales.password}`
+    );
+  }
 }

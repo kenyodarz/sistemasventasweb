@@ -6,11 +6,17 @@ import { LoginGuard } from './guards/login.guard';
 import { LoginComponent } from './pages/login/login.component';
 
 const routes: Routes = [
+  {
+    path: 'resume',
+    loadChildren: () =>
+      import('src/app/pages/resume/resume.module').then((m) => m.ResumeModule),
+    canActivate: [LoginGuard],
+  },
   { path: 'login', component: LoginComponent },
   {
     path: '**',
     pathMatch: 'full',
-    redirectTo: 'login',
+    redirectTo: 'resume',
   },
 ];
 
