@@ -5,12 +5,32 @@
   </label>
   <label class="logo">Ventas</label>
   <ul>
-    <li><a [routerLink]="['/resume/home']" routerLinkActive="active">Home</a></li>
-    <li><a [routerLink]="['producto']" routerLinkActive="active">Producto</a></li>
-    <li><a [routerLink]="['empleado']" routerLinkActive="active">Empleado</a></li>
+    <li>
+      <a [routerLink]="['/resume/home']" routerLinkActive="active">Home</a>
+    </li>
+    <li>
+      <a [routerLink]="['producto']" routerLinkActive="active">Producto</a>
+    </li>
+    <li>
+      <a [routerLink]="['empleado']" routerLinkActive="active">Empleado</a>
+    </li>
     <li><a [routerLink]="['cliente']" routerLinkActive="active">Cliente</a></li>
-    <li><a [routerLink]="['venta']" routerLinkActive="active">Nueva Venta</a></li>
-    <p-splitButton [label]="[usuario]" icon="pi pi-user"  [model]="items" styleClass="p-button-info"></p-splitButton>
+    <li>
+      <a [routerLink]="['venta']" routerLinkActive="active">Nueva Venta</a>
+    </li>
+    <li>
+      <button
+        type="button"
+        id="btn_usuario"
+        pButton
+        pRipple 
+        icon="pi pi-user"
+        [label]="[usuario]"
+        (click)="menu.toggle($event)"
+        class="p-button-outlined"
+      ></button>
+      <p-menu #menu [popup]="true" [model]="items"></p-menu>
+    </li>
   </ul>
 </nav>
 <section>

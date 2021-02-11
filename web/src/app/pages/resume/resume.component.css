@@ -4,7 +4,7 @@ nav {
   height: 80px;
 }
 
-label.logo{
+label.logo {
   color: white;
   font-size: 36px;
   line-height: 80px;
@@ -21,6 +21,14 @@ nav ul li {
   display: inline-block;
   line-height: 80px;
   margin: 0 5px;
+}
+
+#btn_usuario {
+  margin: 20px 0;
+}
+
+::ng-deep .p-menu .p-menuitem-link {
+  justify-content: center;
 }
 
 nav ul li a {

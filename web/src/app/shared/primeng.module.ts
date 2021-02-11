@@ -5,18 +5,14 @@ import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { AvatarModule } from 'primeng/avatar';
-import { AvatarGroupModule } from 'primeng/avatargroup';
-import { SplitButtonModule } from 'primeng/splitbutton';
+import { MenuModule } from 'primeng/menu';
 
 const myModules = [
   MessagesModule,
   MessageModule,
   ToastModule,
   ConfirmDialogModule,
-  AvatarModule,
-  AvatarGroupModule,
-  SplitButtonModule,
+  MenuModule,
 ];
 
 @NgModule({
