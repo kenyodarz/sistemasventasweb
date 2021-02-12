@@ -1,1 +1,181 @@
-<p>clientes works!</p>
+<div class="p-grid container">
+  <div class="p-col-fixed formulario_usuario">
+    <div class="box">
+      <p-card>
+        <form [formGroup]="formCliente">
+          <div class="p-fluid p-formgrid" style="margin: 1em 0">
+            <div>
+              <div>DNI *</div>
+              <input
+                pInputText
+                type="text"
+                formControlName="dni"
+                placeholder="Requerido"
+              />
+              <p-message
+                severity="error"
+                text="El DNI es requerido"
+                *ngIf="
+                  !formCliente.controls['dni'].valid &&
+                  formCliente.controls['dni'].dirty
+                "
+              ></p-message>
+            </div>
+            <div>
+              <div>Nombres *</div>
+              <input
+                pInputText
+                type="text"
+                formControlName="nombres"
+                placeholder="Requerido"
+              />
+              <p-message
+                severity="error"
+                text="Ingrese el nombre completo del cliente"
+                *ngIf="
+                  !formCliente.controls['nombres'].valid &&
+                  formCliente.controls['nombres'].dirty
+                "
+              ></p-message>
+            </div>
+            <div>
+              <div>Direccion *</div>
+              <input
+                pInputText
+                type="text"
+                formControlName="direccion"
+                placeholder="Requerido"
+              />
+              <p-message
+                severity="error"
+                text="direccion"
+                *ngIf="
+                  !formCliente.controls['direccion'].valid &&
+                  formCliente.controls['direccion'].dirty
+                "
+              ></p-message>
+            </div>
+            <div>
+              <div>Estado *</div>
+              <input
+                pInputText
+                type="text"
+                formControlName="estado"
+                placeholder="Requerido"
+              />
+              <p-message
+                severity="error"
+                text="estado"
+                *ngIf="
+                  !formCliente.controls['estado'].valid &&
+                  formCliente.controls['estado'].dirty
+                "
+              ></p-message>
+            </div>
+          </div>
+        </form>
+        <ng-template pTemplate="footer">
+          <p-button
+            icon="pi pi-check"
+            (click)="onGuardar()"
+            label="Aceptar"
+            [disabled]="!formCliente.valid"
+          ></p-button>
+          <p-button
+            id="cancelarbtn"
+            label="Cancelar"
+            (click)="onCancelar()"
+            icon="pi pi-times"
+            styleClass="p-button-secondary"
+          >
+          </p-button>
+        </ng-template>
+      </p-card>
+    </div>
+  </div>
+  <div class="p-col">
+    <div class="box">
+      <p-card>
+        <p-table
+          [value]="clientes"
+          #dt
+          [paginator]="true"
+          selectionMode="single"
+          [(selection)]="selectedCliente"
+          dataKey="idCliente"
+          [rows]="10"
+          [responsive]="true"
+          [globalFilterFields]="['dni', 'nombres', 'telefono', 'user']"
+        >
+          <ng-template pTemplate="caption">
+            <div style="text-align: right">
+              <i class="pi pi-search" style="margin: 4px 4px 0 0"></i>
+              <input
+                type="text"
+                pInputText
+                size="50"
+                placeholder="Buscar"
+                (input)="dt.filterGlobal($event.target.value, 'contains')"
+                style="width: auto"
+                class="p-inputtext-sm"
+              />
+            </div>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th style="width: 3rem">#</th>
+              <th>DNI</th>
+              <th>Nombres</th>
+              <th>Direccion</th>
+              <th>Estado</th>
+              <th style="width: 8rem">Acciones</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-rowIndex="rowIndex" let-cliente>
+            <tr [pSelectableRow]="cliente">
+              <td>{{ rowIndex + 1 }}</td>
+              <td>{{ cliente.dni }}</td>
+              <td>{{ cliente.nombres }}</td>
+              <td>{{ cliente.direccion }}</td>
+              <td>{{ cliente.estado }}</td>
+              <td>
+                <button
+                  pButton
+                  pRipple
+                  type="button"
+                  icon="pi pi-pencil"
+                  (click)="onEditar(cliente)"
+                  class="p-button-rounded p-button-text p-button-info p-mr-2"
+                  styleClass="p-button-sm"
+                ></button>
+                <button
+                  pButton
+                  pRipple
+                  type="button"
+                  icon="pi pi-trash"
+                  class="p-button-rounded p-button-danger p-button-text"
+                  styleClass="p-button-sm"
+                  (click)="onEliminar(cliente)"
+                ></button>
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="summary">
+            <div style="text-align: left">
+              Cliente Seleccionado:
+              {{
+                selectedCliente
+                  ? selectedCliente.dni +
+                    " - " +
+                    selectedCliente.nombres +
+                    " " +
+                    selectedCliente.direccion
+                  : "Ninguno"
+              }}
+            </div>
+          </ng-template>
+        </p-table></p-card
+      >
+    </div>
+  </div>
+</div>
