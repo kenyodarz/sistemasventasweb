@@ -54,6 +54,13 @@ export class ClientesComponent implements OnInit {
         detail: `El cliente ${cliente.nombres} ha sido guardado correctamente`,
       });
       this.validarCliente(cliente);
+    }, (err)=>{
+      console.log(err);
+      this.messageService.add({
+        severity: 'error',
+        summary: '¡Error!',
+        detail: `${err.message}`,
+      });
     });
   }
   validarCliente(cliente: Cliente) {

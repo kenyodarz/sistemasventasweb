@@ -1,1 +1,93 @@
-<p>registrar-venta works!</p>
+<div class="p-d-flex">
+  <div class="p-sm-5">
+    <p-card>
+      <div class="p-fluid p-grid">
+        <div class="p-field p-col-12 p-grid">
+          <div class="p-col-12 p-mb-2">
+            <p-chip label="Datos Cliente" icon="pi pi-user"></p-chip>
+          </div>
+          <div class="p-col-5">
+            <div class="p-fluid">
+              <div class="p-inputgroup">
+                <span class="p-inputgroup-addon"
+                  ><i class="pi pi-angle-right"></i
+                ></span>
+                <input type="text" pInputText placeholder="Codigo" />
+                <button class="p-inputgroup-addon">
+                  <i class="pi pi-search"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="p-col-7">
+            <div class="p-fluid">
+              <div class="p-field">
+                <input id="firstname1" type="text" readonly pInputText />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="p-field p-col-12 p-grid">
+          <div class="p-col-12 p-mb-2">
+            <p-chip label="Datos Producto" icon="pi pi-briefcase"></p-chip>
+          </div>
+          <div class="p-col-5">
+            <div class="p-fluid">
+              <div class="p-inputgroup">
+                <span class="p-inputgroup-addon"
+                  ><i class="pi pi-angle-right"></i
+                ></span>
+                <input type="text" pInputText placeholder="Codigo" />
+                <button class="p-inputgroup-addon">
+                  <i class="pi pi-search"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="p-col-7">
+            <div class="p-fluid">
+              <div class="p-field">
+                <input id="producto" type="text" readonly pInputText />
+              </div>
+            </div>
+          </div>
+          <div class="p-col-5">
+            <div class="p-fluid">
+              <div class="p-inputgroup">
+                <span class="p-inputgroup-addon">$</span>
+                <input type="text" pInputText placeholder="Valor" readonly />
+                <span class="p-inputgroup-addon">.00</span>
+              </div>
+            </div>
+          </div>
+          <div class="p-col-3">
+            <div class="p-fluid">
+              <div class="p-field">
+                <p-inputNumber
+                  mode="decimal"
+                  [showButtons]="true"
+                  inputId="minmax-buttons"
+                  [min]="1"
+                  [max]="100"
+                  id="cantidad"
+                >
+                </p-inputNumber>
+              </div>
+            </div>
+          </div>
+          <div class="p-col-4">
+            <div class="p-fluid">
+              <div class="p-inputgroup">
+                <span class="p-inputgroup-addon">
+                  <i class="pi pi-tag"></i>
+                </span>
+                <input type="text" pInputText placeholder="Stock" readonly />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </p-card>
+  </div>
+  <div class="p-sm-7">7</div>
+</div>

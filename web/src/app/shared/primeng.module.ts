@@ -14,6 +14,8 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { MenubarModule } from 'primeng/menubar';
 import { PaginatorModule } from 'primeng/paginator';
 import { InputTextModule } from 'primeng/inputtext';
+import { ChipModule } from 'primeng/chip';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 const myModules = [
   MessagesModule,
@@ -29,6 +31,8 @@ const myModules = [
   MenubarModule,
   PaginatorModule,
   InputTextModule,
+  InputNumberModule,
+  ChipModule,
 ];
 
 @NgModule({
