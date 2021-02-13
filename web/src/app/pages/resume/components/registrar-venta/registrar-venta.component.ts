@@ -19,6 +19,8 @@ import { Producto } from 'src/app/core/models/producto';
 export class RegistrarVentaComponent implements OnInit {
   cliente: Cliente = new Cliente();
   producto: Producto = new Producto();
+  dni: string = ''
+  nombreCliente = ''
   constructor(
     private clienteService: ClienteService,
     private productoService: ProductoService,
@@ -28,7 +30,23 @@ export class RegistrarVentaComponent implements OnInit {
     private confirmationService: ConfirmationService
   ) {}
 
-  
+  buscarClientePorDNI(dni: string){
+    this.clienteService.encontrarClientePorDNI(dni).subscribe(
+      (cliente: Cliente) => {
+        this.cliente = cliente;
+        this.dni = cliente.dni
+        this.nombreCliente = cliente.nombres
+      },(err) => {
+        this.messageService.add({
+          severity: 'error',
+          summary: '¡¡¡Error!!!',
+          detail: err.error
+        })
+        this.dni = '';
+        this.nombreCliente = '';
+      }
+    )
+  }
 
   ngOnInit(): void {}
 }

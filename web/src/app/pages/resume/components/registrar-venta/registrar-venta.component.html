@@ -12,8 +12,16 @@
                 <span class="p-inputgroup-addon"
                   ><i class="pi pi-angle-right"></i
                 ></span>
-                <input type="text" pInputText placeholder="Codigo" />
-                <button class="p-inputgroup-addon">
+                <input
+                  type="text"
+                  [(ngModel)]="dni"
+                  pInputText
+                  placeholder="Codigo"
+                />
+                <button
+                  class="p-inputgroup-addon"
+                  (click)="buscarClientePorDNI(dni)"
+                >
                   <i class="pi pi-search"></i>
                 </button>
               </div>
@@ -22,7 +30,13 @@
           <div class="p-col-7">
             <div class="p-fluid">
               <div class="p-field">
-                <input id="firstname1" type="text" readonly pInputText />
+                <input
+                  id="firstname1"
+                  [(ngModel)]="nombreCliente"
+                  type="text"
+                  readonly
+                  pInputText
+                />
               </div>
             </div>
           </div>
