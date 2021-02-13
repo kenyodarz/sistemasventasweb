@@ -51,8 +51,17 @@
                 <span class="p-inputgroup-addon"
                   ><i class="pi pi-angle-right"></i
                 ></span>
-                <input type="text" pInputText placeholder="Codigo" />
-                <button class="p-inputgroup-addon">
+                <input
+                  type="text"
+                  pKeyFilter="int"
+                  [(ngModel)]="idProducto"
+                  pInputText
+                  placeholder="Codigo"
+                />
+                <button
+                  (click)="obtenerProducto(idProducto)"
+                  class="p-inputgroup-addon"
+                >
                   <i class="pi pi-search"></i>
                 </button>
               </div>
@@ -61,7 +70,13 @@
           <div class="p-col-7">
             <div class="p-fluid">
               <div class="p-field">
-                <input id="producto" type="text" readonly pInputText />
+                <input
+                  id="producto"
+                  type="text"
+                  readonly
+                  [(ngModel)]="producto.nombres"
+                  pInputText
+                />
               </div>
             </div>
           </div>
@@ -69,7 +84,13 @@
             <div class="p-fluid">
               <div class="p-inputgroup">
                 <span class="p-inputgroup-addon">$</span>
-                <input type="text" pInputText placeholder="Valor" readonly />
+                <input
+                  type="text"
+                  [(ngModel)]="producto.precio"
+                  pInputText
+                  placeholder="Valor"
+                  readonly
+                />
                 <span class="p-inputgroup-addon">.00</span>
               </div>
             </div>
@@ -81,8 +102,9 @@
                   mode="decimal"
                   [showButtons]="true"
                   inputId="minmax-buttons"
+                  [(ngModel)]="cantidarProducto"
                   [min]="1"
-                  [max]="100"
+                  [max]="producto.stock"
                   id="cantidad"
                 >
                 </p-inputNumber>
@@ -95,8 +117,29 @@
                 <span class="p-inputgroup-addon">
                   <i class="pi pi-tag"></i>
                 </span>
-                <input type="text" pInputText placeholder="Stock" readonly />
+                <input
+                  type="text"
+                  [(ngModel)]="producto.stock"
+                  pInputText
+                  placeholder="Stock"
+                  readonly
+                />
               </div>
+            </div>
+          </div>
+        </div>
+        <div class="p-field p-col-12 p-grid">
+          <div class="p-col-6">
+            <div class="p-fluid">
+              <button
+                pButton
+                pRipple
+                icon="pi pi-shopping-cart"
+                [disabled]="idProducto == null && dni == ''"
+                type="button"
+                label="Agregar Producto"
+                class="p-button-outlined"
+              ></button>
             </div>
           </div>
         </div>

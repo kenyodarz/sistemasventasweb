@@ -16,6 +16,7 @@ import { PaginatorModule } from 'primeng/paginator';
 import { InputTextModule } from 'primeng/inputtext';
 import { ChipModule } from 'primeng/chip';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { KeyFilterModule } from 'primeng/keyfilter';
 
 const myModules = [
   MessagesModule,
@@ -33,6 +34,7 @@ const myModules = [
   InputTextModule,
   InputNumberModule,
   ChipModule,
+  KeyFilterModule,
 ];
 
 @NgModule({
