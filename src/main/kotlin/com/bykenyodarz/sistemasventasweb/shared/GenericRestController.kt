@@ -52,7 +52,8 @@ abstract class GenericRestController<T, ID : Serializable>(val serviceAPI: Gener
         ), ApiResponse(code = 404, message = "Entidad no encontrada")]
     )
     fun getOne(@PathVariable id: ID): ResponseEntity<*> {
-        val entity: T = serviceAPI.getOne(id) ?: return ResponseEntity.notFound().build<Any>()
+        val entity: T =
+            serviceAPI.getOne(id) ?: return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Recurso no encontrado")
         return ResponseEntity.ok().body(entity)
     }
 

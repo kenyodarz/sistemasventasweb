@@ -2,6 +2,7 @@ package com.bykenyodarz.sistemasventasweb.models
 
 import javax.persistence.*
 import javax.validation.constraints.NotBlank
+import javax.validation.constraints.NotNull
 
 @Entity
 @Table(name = "producto")
@@ -17,12 +18,12 @@ class Producto {
     var nombres: String? = null
 
     @Column(name = "Precio")
-    @NotBlank
-    var precio: String? = null
+    @NotNull
+    var precio: Double? = null
 
     @Column(name = "Stock")
-    @NotBlank
-    var stock: String? = null
+    @NotNull
+    var stock: Int? = null
 
     @Column(name = "Estado")
     @NotBlank
