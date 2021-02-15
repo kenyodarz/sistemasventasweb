@@ -11,7 +11,14 @@ import { ProductosComponent } from './components/productos/productos.component';
 import { RegistrarVentaComponent } from './components/registrar-venta/registrar-venta.component';
 
 @NgModule({
-  declarations: [ResumeComponent, HomeComponent, ClientesComponent, EmpleadoComponent, ProductosComponent, RegistrarVentaComponent],
+  declarations: [
+    ResumeComponent,
+    HomeComponent,
+    ClientesComponent,
+    EmpleadoComponent,
+    ProductosComponent,
+    RegistrarVentaComponent,
+  ],
   imports: [
     CommonModule,
     ResumeRoutingModule,

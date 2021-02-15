@@ -1,1 +1,184 @@
-<p>productos works!</p>
+<div class="p-grid container">
+  <div class="p-col-fixed formulario_usuario">
+    <div class="box">
+      <p-card>
+        <form [formGroup]="formProducto">
+          <div class="p-fluid p-formgrid" style="margin: 1em 0">
+            <div>
+              <div>Nombre Producto *</div>
+              <input
+                pInputText
+                type="text"
+                formControlName="nombres"
+                placeholder="Requerido"
+              />
+              <p-message
+                severity="error"
+                text="Ingrese el nombre completo del cliente"
+                *ngIf="
+                  !formProducto.controls['nombres'].valid &&
+                  formProducto.controls['nombres'].dirty
+                "
+              ></p-message>
+            </div>
+            <div>
+              <div>Precio *</div>
+              <input
+                pInputText
+                type="text"
+                formControlName="precio"
+                placeholder="Requerido"
+                pKeyFilter="num"
+              />
+              <p-message
+                severity="error"
+                text="Ingrese un precio"
+                *ngIf="
+                  !formProducto.controls['precio'].valid &&
+                  formProducto.controls['precio'].dirty
+                "
+              ></p-message>
+            </div>
+            <div>
+              <div>Stock *</div>
+              <input
+                pInputText
+                type="text"
+                formControlName="stock"
+                placeholder="Requerido"
+                pKeyFilter="int"
+              />
+              <p-message
+                severity="error"
+                text="stock"
+                *ngIf="
+                  !formProducto.controls['stock'].valid &&
+                  formProducto.controls['stock'].dirty
+                "
+              ></p-message>
+            </div>
+            <div>
+              <div>Estado *</div>
+              <input
+                pInputText
+                type="text"
+                formControlName="estado"
+                placeholder="Requerido"
+                pKeyFilter="int"
+              />
+              <p-message
+                severity="error"
+                text="Ingrese un estado de un digito"
+                *ngIf="
+                  !formProducto.controls['estado'].valid &&
+                  formProducto.controls['estado'].dirty
+                "
+              ></p-message>
+            </div>
+          </div>
+        </form>
+        <ng-template pTemplate="footer">
+          <p-button
+            icon="pi pi-check"
+            (click)="onGuardar()"
+            label="Aceptar"
+            [disabled]="!formProducto.valid"
+          ></p-button>
+          <p-button
+            id="cancelarbtn"
+            label="Cancelar"
+            (click)="onCancelar()"
+            icon="pi pi-times"
+            styleClass="p-button-secondary"
+          >
+          </p-button>
+        </ng-template>
+      </p-card>
+    </div>
+  </div>
+  <div class="p-col">
+    <div class="box">
+      <p-card>
+        <p-table
+          [value]="productos"
+          #dt
+          [paginator]="true"
+          selectionMode="single"
+          [(selection)]="selectedProducto"
+          dataKey="idProducto"
+          [rows]="10"
+          [responsive]="true"
+          [globalFilterFields]="['precio', 'nombres', 'stock', 'estado']"
+        >
+          <ng-template pTemplate="caption">
+            <div style="text-align: right">
+              <i class="pi pi-search" style="margin: 4px 4px 0 0"></i>
+              <input
+                type="text"
+                pInputText
+                size="50"
+                placeholder="Buscar"
+                (input)="dt.filterGlobal($event.target.value, 'contains')"
+                style="width: auto"
+                class="p-inputtext-sm"
+              />
+            </div>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th style="width: 3rem">#</th>
+              <th>Nombres</th>
+              <th>Precio</th>
+              <th>stock</th>
+              <th>Estado</th>
+              <th style="width: 8rem">Acciones</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-rowIndex="rowIndex" let-producto>
+            <tr [pSelectableRow]="producto">
+              <td>{{ rowIndex + 1 }}</td>
+              <td>{{ producto.nombres }}</td>
+              <td>{{ producto.precio | currency }}</td>
+              <td>{{ producto.stock }}</td>
+              <td>{{ producto.estado }}</td>
+              <td>
+                <button
+                  pButton
+                  pRipple
+                  type="button"
+                  icon="pi pi-pencil"
+                  (click)="onEditar(producto)"
+                  class="p-button-rounded p-button-text p-button-info p-mr-2"
+                  styleClass="p-button-sm"
+                ></button>
+                <button
+                  pButton
+                  pRipple
+                  type="button"
+                  icon="pi pi-trash"
+                  class="p-button-rounded p-button-danger p-button-text"
+                  styleClass="p-button-sm"
+                  (click)="onEliminar(producto)"
+                ></button>
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="summary">
+            <div style="text-align: left">
+              Producto Seleccionado:
+              {{
+                selectedProducto
+                  ? selectedProducto.nombres +
+                    " - " +
+                    (selectedProducto.precio | currency) +
+                    " - " +
+                    selectedProducto.stock
+                  : "Ninguno"
+              }}
+            </div>
+          </ng-template>
+        </p-table></p-card
+      >
+    </div>
+  </div>
+</div>

@@ -75,6 +75,7 @@ export class ProductosComponent implements OnInit {
     } else {
       this.productos.push(producto);
     }
+    this.formProducto.reset();
   }
 
   editarProducto() {
@@ -154,7 +155,14 @@ export class ProductosComponent implements OnInit {
       nombres: new FormControl(null, Validators.required),
       precio: new FormControl(0.0, Validators.required),
       stock: new FormControl(0, Validators.required),
-      estado: new FormControl(null, Validators.required),
+      estado: new FormControl(
+        null,
+        Validators.compose([
+          Validators.required,
+          Validators.minLength(1),
+          Validators.maxLength(1),
+        ])
+      ),
     });
   }
 }
