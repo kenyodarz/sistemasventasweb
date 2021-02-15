@@ -146,5 +146,61 @@
       </div>
     </p-card>
   </div>
-  <div class="p-sm-7">7</div>
+  <div class="p-sm-7">
+    <p-card>
+      <div class="p-fluid">
+        <div class="p-field p-grid">
+          <label for="numeroSerie" class="p-col-12 p-mb-2 p-md-3 p-mb-md-0"
+            >Numero Serie:
+          </label>
+          <div class="p-col-12 p-md-9">
+            <input id="numeroSerie" type="text" pInputText />
+          </div>
+        </div>
+      </div>
+      <p-table>
+        <ng-template pTemplate="caption"></ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Nro</th>
+            <th>Codigo</th>
+            <th>Descripcion</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Subtotal</th>
+            <th>Acciones</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body">
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          <div class="p-field p-grid p-jc-end">
+            <button
+              pButton
+              pRipple
+              type="button"
+              label="Generar Venta"
+              class="p-button-outlined p-button-success"
+            ></button>
+            <button
+              pButton
+              pRipple
+              type="button"
+              label="Cancelar"
+              class="p-button-outlined p-ml-1 p-button-danger"
+            ></button>
+          </div>
+        </ng-template>
+      </p-table>
+    </p-card>
+  </div>
 </div>
