@@ -15,6 +15,7 @@
                 <input
                   type="text"
                   [(ngModel)]="dni"
+                  (ngModelChange)="buscarClientePorDNI($event)"
                   pInputText
                   placeholder="Codigo"
                 />
@@ -56,6 +57,7 @@
                   pKeyFilter="int"
                   [(ngModel)]="idProducto"
                   pInputText
+                  (ngModelChange)="obtenerProducto($event)"
                   placeholder="Codigo"
                 />
                 <button
@@ -102,7 +104,7 @@
                   mode="decimal"
                   [showButtons]="true"
                   inputId="minmax-buttons"
-                  [(ngModel)]="cantidarProducto"
+                  [(ngModel)]="cantidadProducto"
                   [min]="1"
                   [max]="producto.stock"
                   id="cantidad"
@@ -138,6 +140,7 @@
                 [disabled]="idProducto == null && dni == ''"
                 type="button"
                 label="Agregar Producto"
+                (click)="onAgregarProducto()"
                 class="p-button-outlined"
               ></button>
             </div>
@@ -154,11 +157,19 @@
             >Numero Serie:
           </label>
           <div class="p-col-12 p-md-9">
-            <input id="numeroSerie" type="text" pInputText />
+            <input id="numeroSerie" [(ngModel)]="numeroSerie" readonly type="text" pInputText class="p-text-right p-text-bold"/>
           </div>
         </div>
       </div>
-      <p-table>
+      <p-table
+        [value]="ventasNuevas"
+        #dt
+        [paginator]="true"
+        dataKey="idCliente"
+        [rows]="10"
+        [responsive]="true"
+        [globalFilterFields]="['']"
+      >
         <ng-template pTemplate="caption"></ng-template>
         <ng-template pTemplate="header">
           <tr>
@@ -171,15 +182,25 @@
             <th>Acciones</th>
           </tr>
         </ng-template>
-        <ng-template pTemplate="body">
+        <ng-template pTemplate="body" let-rowIndex="rowIndex" let-ventaNueva>
           <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>{{ rowIndex + 1 }}</td>
+            <td>{{ ventaNueva.id }}</td>
+            <td>{{ ventaNueva.descriptionP }}</td>
+            <td>{{ ventaNueva.precio }}</td>
+            <td>{{ ventaNueva.cantidad }}</td>
+            <td>{{ ventaNueva.subtotal }}</td>
+            <td>
+              <button
+                pButton
+                pRipple
+                type="button"
+                icon="pi pi-trash"
+                class="p-button-rounded p-button-danger p-button-text"
+                styleClass="p-button-sm"
+                (click)="onEliminar(ventaNueva)"
+              ></button>
+            </td>
           </tr>
         </ng-template>
         <ng-template pTemplate="summary">
@@ -198,6 +219,19 @@
               label="Cancelar"
               class="p-button-outlined p-ml-1 p-button-danger"
             ></button>
+            <p-inputNumber
+              [(ngModel)]="total"
+              readonly
+              class="p-ml-1 p-inputtext-lg"
+              inputId="locale-us"
+              mode="currency"
+              locale="en-US"
+              placeholder="Total"
+              [minFractionDigits]="2"
+              inputId="currency-us"
+              currency="USD"
+            >
+            </p-inputNumber>
           </div>
         </ng-template>
       </p-table>

@@ -7,9 +7,12 @@ import { Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ClienteService } from 'src/app/core/services/cliente.service';
 import { ProductoService } from 'src/app/core/services/producto.service';
+import { VentaService } from 'src/app/core/services/venta.service';
 // Modelos
 import { Cliente } from 'src/app/core/models/cliente';
 import { Producto } from 'src/app/core/models/producto';
+import { Venta } from 'src/app/core/models/venta';
+import { NuevaVenta } from 'src/app/core/models/nueva-venta';
 
 @Component({
   selector: 'app-registrar-venta',
@@ -19,13 +22,17 @@ import { Producto } from 'src/app/core/models/producto';
 export class RegistrarVentaComponent implements OnInit {
   cliente: Cliente = new Cliente();
   producto: Producto = new Producto();
+  ventasNuevas: NuevaVenta[] = [];
   dni: string = '';
   idProducto: number;
   nombreCliente = '';
-  cantidarProducto: number = 0
+  total: number;
+  cantidadProducto: number = 0;
+  numeroSerie: string;
   constructor(
     private clienteService: ClienteService,
     private productoService: ProductoService,
+    private ventaService: VentaService,
     private router: Router,
     private fb: FormBuilder,
     private messageService: MessageService,
@@ -57,7 +64,7 @@ export class RegistrarVentaComponent implements OnInit {
         this.producto = producto;
         this.idProducto = producto.idProducto;
         if (producto.stock > 0) {
-          this.cantidarProducto = 1;
+          this.cantidadProducto = 1;
         }
       }),
         (err: any) => {
@@ -70,5 +77,40 @@ export class RegistrarVentaComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
+  obtenerNumeroSerie() {
+    this.ventaService.obtenerSerie().subscribe(w => this.numeroSerie = w.numero)
+  }
+
+  onAgregarProducto() {
+    let nuevaVenta: NuevaVenta = new NuevaVenta();
+    nuevaVenta.id = this.producto.idProducto;
+    nuevaVenta.descriptionP = this.producto.nombres;
+    nuevaVenta.precio = this.producto.precio;
+    nuevaVenta.cantidad = this.cantidadProducto;
+    nuevaVenta.subtotal = this.producto.precio * this.cantidadProducto;
+    this.ventasNuevas.push(nuevaVenta);
+    this.producto = new Producto();
+    this.calcularTotal();
+    this.idProducto = null;
+    console.log(this.ventasNuevas);
+  }
+
+  onEliminar(ventaNueva) {
+    this.ventasNuevas.splice(
+      this.ventasNuevas.findIndex((e) => e.id === ventaNueva.id),
+      1
+    );
+    this.calcularTotal();
+  }
+
+  calcularTotal() {
+    this.total = 0;
+    this.ventasNuevas.forEach((e) => {
+      this.total += e.subtotal;
+    });
+  }
+
+  ngOnInit(): void {
+    this.obtenerNumeroSerie();
+  }
 }

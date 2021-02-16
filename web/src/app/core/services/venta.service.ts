@@ -7,6 +7,7 @@ import { CommonService } from './common.service';
 import { API_URL } from "src/environments/environment";
 // Modelo
 import { Venta } from "src/app/core/models/venta";
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -14,4 +15,8 @@ import { Venta } from "src/app/core/models/venta";
 export class VentaService extends CommonService<Venta, number>{
   protected URL_API: string = `${API_URL}/ventas`;
   constructor(protected http: HttpClient) { super(http); }
+
+  obtenerSerie():Observable<any>{
+    return this.http.get<any>(`${this.URL_API}/serie`)
+  }
 }
