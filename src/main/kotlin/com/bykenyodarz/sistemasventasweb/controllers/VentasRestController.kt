@@ -8,6 +8,7 @@ import io.swagger.annotations.Api
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.BindingResult
 import org.springframework.web.bind.annotation.CrossOrigin
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
@@ -17,11 +18,9 @@ import org.springframework.web.bind.annotation.RestController
 @Api(tags = ["venta"])
 class VentasRestController(override var serviceAPI: VentaServiceAPI) : GenericRestController<Venta, Int>(serviceAPI) {
 
-
-    override fun save(entity: Venta, result: BindingResult): ResponseEntity<*> {
+    @GetMapping("/serie")
+    fun obtenerNumeroSerie(): ResponseEntity<String>{
         val generarSerie = GenerarSerie()
-        entity.numeroSerie = generarSerie.numeroSerie(serviceAPI.findMAxNumeroSerie())
-
-        return super.save(entity, result)
+        return ResponseEntity.ok().body(generarSerie.numeroSerie(serviceAPI.findMAxNumeroSerie()))
     }
 }
