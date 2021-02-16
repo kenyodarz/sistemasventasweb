@@ -1,7 +1,6 @@
 package com.bykenyodarz.sistemasventasweb.models
 
 import java.time.LocalDate
-import java.time.LocalTime
 import javax.persistence.*
 
 @Entity
@@ -32,5 +31,10 @@ class Venta {
 
     @Column(name = "Estado")
     var estado: String? = null
+
+    @PrePersist
+    fun prePersist() {
+        this.fechaVentas = LocalDate.now()
+    }
 
 }

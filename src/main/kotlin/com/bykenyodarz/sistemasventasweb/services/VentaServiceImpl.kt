@@ -19,4 +19,9 @@ class VentaServiceImpl(repository: VentaRepository) : GenericServiceImpl<Venta, 
     override fun getRepository(): JpaRepository<Venta, Int> {
         return this.repository
     }
+
+    override fun findMAxNumeroSerie(): Int {
+        val numeroSerie = this.repository.findMAxNumeroSerie()
+        return  numeroSerie.orElse(0)
+    }
 }
