@@ -157,7 +157,14 @@
             >Numero Serie:
           </label>
           <div class="p-col-12 p-md-9">
-            <input id="numeroSerie" [(ngModel)]="numeroSerie" readonly type="text" pInputText class="p-text-right p-text-bold"/>
+            <input
+              id="numeroSerie"
+              [(ngModel)]="numeroSerie"
+              readonly
+              type="text"
+              pInputText
+              class="p-text-right p-text-bold"
+            />
           </div>
         </div>
       </div>
@@ -210,6 +217,8 @@
               pRipple
               type="button"
               label="Generar Venta"
+              (click)="onGenerarVenta()"
+              [disabled]="total === 0 || cliente === null"
               class="p-button-outlined p-button-success"
             ></button>
             <button
@@ -221,7 +230,7 @@
             ></button>
             <p-inputNumber
               [(ngModel)]="total"
-              readonly
+              disabled
               class="p-ml-1 p-inputtext-lg"
               inputId="locale-us"
               mode="currency"
@@ -230,6 +239,7 @@
               [minFractionDigits]="2"
               inputId="currency-us"
               currency="USD"
+              inputStyleClass="p-text-right p-text-bold"
             >
             </p-inputNumber>
           </div>

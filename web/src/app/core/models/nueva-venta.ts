@@ -1,9 +1,11 @@
+import { Producto } from "./producto";
+
 export class NuevaVenta {
   constructor(
     public id: number = null,
     public idCliente: number = null,
     public idEmpleado: number = null,
-    public idProducto: number = null,
+    public idProducto: Producto = null,
     public numeroSerie: string = null,
     public descriptionP: string = null,
     public fecha: string = null,

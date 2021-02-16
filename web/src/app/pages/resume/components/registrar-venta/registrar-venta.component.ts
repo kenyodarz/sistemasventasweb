@@ -8,10 +8,14 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ClienteService } from 'src/app/core/services/cliente.service';
 import { ProductoService } from 'src/app/core/services/producto.service';
 import { VentaService } from 'src/app/core/services/venta.service';
+import { DetalleVentaService } from 'src/app/core/services/detalle-venta.service';
+import { TokenStorageService } from 'src/app/core/services/token-storage.service';
 // Modelos
 import { Cliente } from 'src/app/core/models/cliente';
 import { Producto } from 'src/app/core/models/producto';
 import { Venta } from 'src/app/core/models/venta';
+import { DetalleVenta } from 'src/app/core/models/detalle-venta';
+import { Empleado } from 'src/app/core/models/empleado';
 import { NuevaVenta } from 'src/app/core/models/nueva-venta';
 
 @Component({
@@ -20,23 +24,25 @@ import { NuevaVenta } from 'src/app/core/models/nueva-venta';
   styleUrls: ['./registrar-venta.component.css'],
 })
 export class RegistrarVentaComponent implements OnInit {
-  cliente: Cliente = new Cliente();
+  cliente: Cliente = null;
   producto: Producto = new Producto();
   ventasNuevas: NuevaVenta[] = [];
   dni: string = '';
   idProducto: number;
   nombreCliente = '';
-  total: number;
+  total: number = 0;
   cantidadProducto: number = 0;
   numeroSerie: string;
   constructor(
     private clienteService: ClienteService,
     private productoService: ProductoService,
     private ventaService: VentaService,
+    private detalleVentaService: DetalleVentaService,
     private router: Router,
     private fb: FormBuilder,
     private messageService: MessageService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private token: TokenStorageService
   ) {}
 
   buscarClientePorDNI(dni: string) {
@@ -54,36 +60,44 @@ export class RegistrarVentaComponent implements OnInit {
         });
         this.dni = '';
         this.nombreCliente = '';
+        this.cliente = null;
       }
     );
   }
 
   obtenerProducto(id: number) {
     if (id !== null && id !== 0) {
-      this.productoService.getOne(id).subscribe((producto) => {
-        this.producto = producto;
-        this.idProducto = producto.idProducto;
-        if (producto.stock > 0) {
-          this.cantidadProducto = 1;
-        }
-      }),
+      this.productoService.getOne(id).subscribe(
+        (producto) => {
+          this.producto = producto;
+          this.idProducto = producto.idProducto;
+          if (producto.stock > 0) {
+            this.cantidadProducto = 1;
+          }
+        },
         (err: any) => {
           this.messageService.add({
             severity: 'error',
             summary: '¡¡¡Error!!!',
             detail: err.error,
           });
-        };
+          this.idProducto = null;
+          this.producto = new Producto();
+        }
+      );
     }
   }
 
   obtenerNumeroSerie() {
-    this.ventaService.obtenerSerie().subscribe(w => this.numeroSerie = w.numero)
+    this.ventaService
+      .obtenerSerie()
+      .subscribe((w) => (this.numeroSerie = w.numero));
   }
 
   onAgregarProducto() {
     let nuevaVenta: NuevaVenta = new NuevaVenta();
     nuevaVenta.id = this.producto.idProducto;
+    nuevaVenta.idProducto = this.producto;
     nuevaVenta.descriptionP = this.producto.nombres;
     nuevaVenta.precio = this.producto.precio;
     nuevaVenta.cantidad = this.cantidadProducto;
@@ -107,6 +121,40 @@ export class RegistrarVentaComponent implements OnInit {
     this.total = 0;
     this.ventasNuevas.forEach((e) => {
       this.total += e.subtotal;
+    });
+  }
+
+  onGenerarVenta() {
+    let venta = new Venta();
+    let empleado: Empleado = this.token.obtenerUsuario();
+    venta.cliente = this.cliente;
+    venta.empleado = empleado;
+    venta.numeroSerie = this.numeroSerie;
+    venta.monto = this.total;
+    venta.estado = '1';
+    this.ventaService.save(venta).subscribe((venta: Venta) => {
+      this.ventasNuevas.forEach((nuevaVenta) => {
+        let detalleVenta = new DetalleVenta();
+        detalleVenta.cantidad = nuevaVenta.cantidad;
+        detalleVenta.precioVenta = nuevaVenta.subtotal;
+        detalleVenta.producto = nuevaVenta.idProducto;
+        detalleVenta.venta = venta;
+        this.detalleVentaService
+          .save(detalleVenta)
+          .subscribe((detalleVenta: DetalleVenta) => {
+            this.messageService.add({
+              severity: 'info',
+              summary: 'Agregado',
+              detail: `Agregado correctamente ${detalleVenta.producto.nombres}`,
+            });
+          });
+        this.messageService.add({
+          severity: 'success',
+          summary: '¡¡¡Exito!!!',
+          detail: `Guardado correctamente ${venta.numeroSerie}`,
+        });
+        this.router.navigateByUrl('home')
+      });
     });
   }
 
