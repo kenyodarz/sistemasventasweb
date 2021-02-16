@@ -4,9 +4,9 @@ class GenerarSerie {
 
     var dato: Int? = null
 
-    private lateinit var numero: String
+    lateinit var numero: String
 
-    fun numeroSerie(dato: Int): String {
+    fun numeroSerie(dato: Int) {
         this.dato = dato + 1
         this.numero = ""
         if ((this.dato!! >= 1000000) && (this.dato!! <= 100000000)) numero = "${this.dato}"
@@ -18,7 +18,7 @@ class GenerarSerie {
         if ((this.dato!! >= 10) && (this.dato!! <= 99)) numero = "000000${this.dato}"
         if ((this.dato!! <= 9)) numero = "0000000${this.dato}"
 
-        return numero
+        this.numero
     }
 
 }

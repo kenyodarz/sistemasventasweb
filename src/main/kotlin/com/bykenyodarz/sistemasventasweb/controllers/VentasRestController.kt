@@ -19,8 +19,9 @@ import org.springframework.web.bind.annotation.RestController
 class VentasRestController(override var serviceAPI: VentaServiceAPI) : GenericRestController<Venta, Int>(serviceAPI) {
 
     @GetMapping("/serie")
-    fun obtenerNumeroSerie(): ResponseEntity<String>{
+    fun obtenerNumeroSerie(): ResponseEntity<GenerarSerie>{
         val generarSerie = GenerarSerie()
-        return ResponseEntity.ok().body(generarSerie.numeroSerie(serviceAPI.findMAxNumeroSerie()))
+        generarSerie.numeroSerie(serviceAPI.findMAxNumeroSerie())
+        return ResponseEntity.ok().body(generarSerie)
     }
 }
