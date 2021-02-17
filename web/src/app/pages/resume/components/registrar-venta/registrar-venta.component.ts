@@ -67,7 +67,7 @@ export class RegistrarVentaComponent implements OnInit {
 
   obtenerProducto(id: number) {
     if (id !== null && id !== 0) {
-      this.productoService.getOne(id).subscribe(
+      this.productoService.obtenerProductoConStock(id).subscribe(
         (producto) => {
           this.producto = producto;
           this.idProducto = producto.idProducto;
@@ -133,29 +133,44 @@ export class RegistrarVentaComponent implements OnInit {
     venta.monto = this.total;
     venta.estado = '1';
     this.ventaService.save(venta).subscribe((venta: Venta) => {
-      this.ventasNuevas.forEach((nuevaVenta) => {
-        let detalleVenta = new DetalleVenta();
-        detalleVenta.cantidad = nuevaVenta.cantidad;
-        detalleVenta.precioVenta = nuevaVenta.subtotal;
-        detalleVenta.producto = nuevaVenta.idProducto;
-        detalleVenta.venta = venta;
-        this.detalleVentaService
-          .save(detalleVenta)
-          .subscribe((detalleVenta: DetalleVenta) => {
-            this.messageService.add({
-              severity: 'info',
-              summary: 'Agregado',
-              detail: `Agregado correctamente ${detalleVenta.producto.nombres}`,
-            });
-          });
-        this.messageService.add({
-          severity: 'success',
-          summary: '¡¡¡Exito!!!',
-          detail: `Guardado correctamente ${venta.numeroSerie}`,
-        });
-        this.router.navigateByUrl('home')
+      this.agregarDetalleVente(venta);
+      this.messageService.add({
+        severity: 'success',
+        summary: '¡¡¡Exito!!!',
+        detail: `Guardado correctamente ${venta.numeroSerie}`,
       });
+      this.router.navigateByUrl('home');
     });
+  }
+
+  agregarDetalleVente(venta: Venta) {
+    console.log('Agregando Detalles');
+    this.ventasNuevas.forEach((nuevaVenta) => {
+      let detalleVenta = new DetalleVenta();
+      detalleVenta.cantidad = nuevaVenta.cantidad;
+      detalleVenta.precioVenta = nuevaVenta.subtotal;
+      detalleVenta.producto = nuevaVenta.idProducto;
+      detalleVenta.venta = venta;
+      this.detalleVentaService
+        .save(detalleVenta)
+        .subscribe((detalleVenta: DetalleVenta) => {
+          this.actualizarStock(detalleVenta);
+        });
+    });
+  }
+
+  actualizarStock(detalleVenta: DetalleVenta) {
+    console.log('Actualiznado Stock');
+    this.productoService
+      .actualizarStock(detalleVenta.producto.idProducto, detalleVenta.cantidad)
+      .subscribe((producto: Producto) => {
+        console.info(producto);
+        this.messageService.add({
+          severity: 'info',
+          summary: 'Agregado',
+          detail: `Agregado correctamente ${producto.nombres}`,
+        });
+      });
   }
 
   ngOnInit(): void {

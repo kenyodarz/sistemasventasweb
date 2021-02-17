@@ -127,6 +127,7 @@
           <ng-template pTemplate="header">
             <tr>
               <th style="width: 3rem">#</th>
+              <th>Codigo</th>
               <th>Nombres</th>
               <th>Precio</th>
               <th>stock</th>
@@ -137,6 +138,7 @@
           <ng-template pTemplate="body" let-rowIndex="rowIndex" let-producto>
             <tr [pSelectableRow]="producto">
               <td>{{ rowIndex + 1 }}</td>
+              <td>{{ producto.idProducto }}</td>
               <td>{{ producto.nombres }}</td>
               <td>{{ producto.precio | currency }}</td>
               <td>{{ producto.stock }}</td>
