@@ -56,7 +56,7 @@ export class RegistrarVentaComponent implements OnInit {
         this.messageService.add({
           severity: 'error',
           summary: '¡¡¡Error!!!',
-          detail: err.error,
+          detail: err.error.message,
         });
         this.dni = '';
         this.nombreCliente = '';
