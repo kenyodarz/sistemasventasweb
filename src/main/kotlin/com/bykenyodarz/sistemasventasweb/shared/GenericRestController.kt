@@ -60,7 +60,7 @@ abstract class GenericRestController<T, ID : Serializable>(val serviceAPI: Gener
     @PostMapping("/save")
     @ApiOperation(value = "Crear/Editar una Entidad", notes = "servicio para crear o editar entidades")
     @ApiResponses(
-        value = [ApiResponse(code = 200, message = "Entidad creada correctamente"), ApiResponse(
+        value = [ApiResponse(code = 201, message = "Entidad creada correctamente"), ApiResponse(
             code = 401,
             message = "Usuario No Autorizado"
         ), ApiResponse(code = 403, message = "Solicitud prohibida por el servidor"), ApiResponse(

@@ -63,6 +63,7 @@ export class ClientesComponent implements OnInit {
       });
     });
   }
+
   validarCliente(cliente: Cliente) {
     let index = this.clientes.findIndex(
       (e) => e.idCliente === cliente.idCliente
@@ -121,6 +122,7 @@ export class ClientesComponent implements OnInit {
       },
     });
   }
+  
   validarEliminar(cliente: Cliente) {
     this.clientes.splice(
       this.clientes.findIndex((e) => e.idCliente === cliente.idCliente),
