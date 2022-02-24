@@ -3,7 +3,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/bd_ventas?serverTimezone=UTC
     username: root
-    password: programador
+    password: 1234abcd
     driver-class-name: com.mysql.cj.jdbc.Driver
   # Configuraciones del JPA
   jpa:
