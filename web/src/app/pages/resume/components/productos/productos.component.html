@@ -107,7 +107,9 @@
           [(selection)]="selectedProducto"
           dataKey="idProducto"
           [rows]="10"
-          [responsive]="true"
+          [resizableColumns]="true" 
+          columnResizeMode="expand" 
+          [tableStyle]="{ 'min-width': '50rem' }"
           [globalFilterFields]="['precio', 'nombres', 'stock', 'estado']"
         >
           <ng-template pTemplate="caption">

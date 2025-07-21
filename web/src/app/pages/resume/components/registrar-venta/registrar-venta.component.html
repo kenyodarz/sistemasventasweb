@@ -174,8 +174,10 @@
         [paginator]="true"
         dataKey="idCliente"
         [rows]="10"
-        [responsive]="true"
         [globalFilterFields]="['']"
+        [resizableColumns]="true" 
+        columnResizeMode="expand" 
+        [tableStyle]="{ 'min-width': '50rem' }"
       >
         <ng-template pTemplate="caption"></ng-template>
         <ng-template pTemplate="header">

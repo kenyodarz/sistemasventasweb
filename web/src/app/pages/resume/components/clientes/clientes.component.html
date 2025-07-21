@@ -104,7 +104,9 @@
           [(selection)]="selectedCliente"
           dataKey="idCliente"
           [rows]="10"
-          [responsive]="true"
+          [resizableColumns]="true" 
+          columnResizeMode="expand" 
+          [tableStyle]="{ 'min-width': '50rem' }"
           [globalFilterFields]="['dni', 'nombres', 'telefono', 'user']"
         >
           <ng-template pTemplate="caption">

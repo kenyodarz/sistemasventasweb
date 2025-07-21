@@ -1,15 +1,30 @@
-// Angular
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
-import { Validators, UntypedFormBuilder } from '@angular/forms';
-import { Router } from '@angular/router';
-//Servicios
+import { CommonModule } from '@angular/common';
+import { RouterModule, Router } from '@angular/router';
+import {
+  FormsModule,
+  ReactiveFormsModule,
+  UntypedFormBuilder,
+} from '@angular/forms';
+
+// PrimeNG
+import { CardModule } from 'primeng/card';
+import { ToastModule } from 'primeng/toast';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
+import { TableModule } from 'primeng/table';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { ChipModule } from 'primeng/chip';
+
+// Servicios
 import { ClienteService } from 'src/app/core/services/cliente.service';
 import { ProductoService } from 'src/app/core/services/producto.service';
 import { VentaService } from 'src/app/core/services/venta.service';
 import { DetalleVentaService } from 'src/app/core/services/detalle-venta.service';
 import { TokenStorageService } from 'src/app/core/services/token-storage.service';
+
 // Modelos
 import { Cliente } from 'src/app/core/models/cliente';
 import { Producto } from 'src/app/core/models/producto';
@@ -20,8 +35,24 @@ import { NuevaVenta } from 'src/app/core/models/nueva-venta';
 
 @Component({
   selector: 'app-registrar-venta',
+  standalone: true,
   templateUrl: './registrar-venta.component.html',
   styleUrls: ['./registrar-venta.component.css'],
+  imports: [
+    CommonModule,
+    RouterModule,
+    FormsModule,
+    ReactiveFormsModule,
+    ToastModule,
+    ConfirmDialogModule,
+    InputTextModule,
+    ButtonModule,
+    TableModule,
+    CardModule,
+    InputNumberModule,
+    ChipModule,
+  ],
+  providers: [ConfirmationService, MessageService],
 })
 export class RegistrarVentaComponent implements OnInit {
   cliente: Cliente = null;
@@ -33,6 +64,7 @@ export class RegistrarVentaComponent implements OnInit {
   total: number = 0;
   cantidadProducto: number = 0;
   numeroSerie: string;
+
   constructor(
     private clienteService: ClienteService,
     private productoService: ProductoService,
@@ -44,6 +76,10 @@ export class RegistrarVentaComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private token: TokenStorageService
   ) {}
+
+  ngOnInit(): void {
+    this.obtenerNumeroSerie();
+  }
 
   buscarClientePorDNI(dni: string) {
     this.clienteService.encontrarClientePorDNI(dni).subscribe(
@@ -106,7 +142,6 @@ export class RegistrarVentaComponent implements OnInit {
     this.producto = new Producto();
     this.calcularTotal();
     this.idProducto = null;
-    console.log(this.ventasNuevas);
   }
 
   onEliminar(ventaNueva) {
@@ -144,7 +179,6 @@ export class RegistrarVentaComponent implements OnInit {
   }
 
   agregarDetalleVente(venta: Venta) {
-    console.log('Agregando Detalles');
     this.ventasNuevas.forEach((nuevaVenta) => {
       let detalleVenta = new DetalleVenta();
       detalleVenta.cantidad = nuevaVenta.cantidad;
@@ -160,20 +194,14 @@ export class RegistrarVentaComponent implements OnInit {
   }
 
   actualizarStock(detalleVenta: DetalleVenta) {
-    console.log('Actualiznado Stock');
     this.productoService
       .actualizarStock(detalleVenta.producto.idProducto, detalleVenta.cantidad)
       .subscribe((producto: Producto) => {
-        console.info(producto);
         this.messageService.add({
           severity: 'info',
           summary: 'Agregado',
           detail: `Agregado correctamente ${producto.nombres}`,
         });
       });
-  }
-
-  ngOnInit(): void {
-    this.obtenerNumeroSerie();
   }
 }

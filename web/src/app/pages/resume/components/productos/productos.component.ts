@@ -1,16 +1,45 @@
-// Angular
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
-import { Validators, UntypedFormBuilder } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  ReactiveFormsModule,
+  FormsModule,
+  FormControl,
+} from '@angular/forms';
 import { Router } from '@angular/router';
-// Servicios
+
+// PrimeNG
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ToastModule } from 'primeng/toast';
+import { TableModule } from 'primeng/table';
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { CardModule } from 'primeng/card';
+
+// Servicios
 import { ProductoService } from 'src/app/core/services/producto.service';
-// Modelos
+// Modelo
 import { Producto } from 'src/app/core/models/producto';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-productos',
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    ToastModule,
+    ConfirmDialogModule,
+    TableModule,
+    InputTextModule,
+    ButtonModule,
+    InputNumberModule,
+    CardModule,
+  ],
   templateUrl: './productos.component.html',
   styleUrls: ['./productos.component.css'],
 })
@@ -18,31 +47,39 @@ export class ProductosComponent implements OnInit {
   producto: Producto = new Producto();
   productos: Producto[] = [];
   selectedProducto: Producto = null;
-  formProducto: UntypedFormGroup;
+  formProducto: FormGroup;
 
   constructor(
     private productoService: ProductoService,
     private router: Router,
-    private fb: UntypedFormBuilder,
+    private fb: FormBuilder,
     private messageService: MessageService,
     private confirmationService: ConfirmationService
   ) {}
 
+  ngOnInit(): void {
+    this.obtenerProductos();
+    this.formProducto = this.fb.group({
+      idProducto: new FormControl(),
+      nombres: new FormControl(null, Validators.required),
+      precio: new FormControl(0.0, Validators.required),
+      stock: new FormControl(0, Validators.required),
+      estado: new FormControl(
+        null,
+        Validators.compose([
+          Validators.required,
+          Validators.minLength(1),
+          Validators.maxLength(1),
+        ])
+      ),
+    });
+  }
+
   obtenerProductos(): void {
     this.productoService.getAll().subscribe((productosList: Producto[]) => {
-      let productos: Producto[] = [];
-      productosList.forEach((producto) => {
-        productos.push(producto);
-      });
-      this.productos = productos.sort(function (a, b) {
-        if (a.nombres > b.nombres) {
-          return 1;
-        }
-        if (a.nombres < b.nombres) {
-          return -1;
-        }
-        return 0;
-      });
+      this.productos = productosList.sort((a, b) =>
+        a.nombres.localeCompare(b.nombres)
+      );
     });
   }
 
@@ -52,12 +89,12 @@ export class ProductosComponent implements OnInit {
         this.messageService.add({
           severity: 'success',
           summary: '¡Correcto!',
-          detail: `el producto ${producto.nombres} ha sido guardado correctamente`,
+          detail: `El producto ${producto.nombres} ha sido guardado correctamente`,
         });
         this.validarProducto(producto);
       },
       (err) => {
-        console.log(err);
+        console.error(err);
         this.messageService.add({
           severity: 'error',
           summary: '¡Error!',
@@ -66,11 +103,12 @@ export class ProductosComponent implements OnInit {
       }
     );
   }
+
   validarProducto(producto: Producto) {
-    let index = this.productos.findIndex(
+    const index = this.productos.findIndex(
       (e) => e.idProducto === producto.idProducto
     );
-    if (index != -1) {
+    if (index !== -1) {
       this.productos[index] = producto;
     } else {
       this.productos.push(producto);
@@ -79,32 +117,27 @@ export class ProductosComponent implements OnInit {
   }
 
   editarProducto() {
-    if (
-      this.selectedProducto != null &&
-      this.selectedProducto.idProducto != null
-    ) {
+    if (this.selectedProducto && this.selectedProducto.idProducto != null) {
       this.formProducto.patchValue(this.selectedProducto);
     } else {
       this.messageService.add({
         severity: 'warn',
-        summary: '¡¡¡Advertencia!!!',
-        detail: 'No ha seleccionado ningun producto',
+        summary: 'Advertencia',
+        detail: 'No ha seleccionado ningún producto',
       });
     }
   }
 
   eliminarProducto() {
-    if (
-      this.selectedProducto == null &&
-      this.selectedProducto.idProducto == null
-    ) {
+    if (!this.selectedProducto || !this.selectedProducto.idProducto) {
       this.messageService.add({
         severity: 'warn',
-        summary: '¡¡¡Advertencia!!!',
-        detail: 'No ha seleccionado ningun productos',
+        summary: 'Advertencia',
+        detail: 'No ha seleccionado ningún producto',
       });
       return;
     }
+
     this.confirmationService.confirm({
       message: `¿Está seguro que desea eliminar el producto ${this.selectedProducto.nombres}?`,
       accept: () => {
@@ -114,17 +147,17 @@ export class ProductosComponent implements OnInit {
             this.messageService.add({
               severity: 'info',
               summary: 'Información',
-              detail: `El producto ${producto.nombres} a sido eliminado Correctamente`,
+              detail: `El producto ${producto.nombres} ha sido eliminado correctamente`,
             });
             this.validarEliminar(producto);
           });
       },
     });
   }
+
   validarEliminar(producto: Producto) {
-    this.productos.splice(
-      this.productos.findIndex((e) => e.idProducto === producto.idProducto),
-      1
+    this.productos = this.productos.filter(
+      (e) => e.idProducto !== producto.idProducto
     );
   }
 
@@ -146,23 +179,5 @@ export class ProductosComponent implements OnInit {
   onGuardar() {
     this.producto = this.formProducto.value;
     this.guardarProducto();
-  }
-
-  ngOnInit(): void {
-    this.obtenerProductos();
-    this.formProducto = this.fb.group({
-      idProducto: new UntypedFormControl(),
-      nombres: new UntypedFormControl(null, Validators.required),
-      precio: new UntypedFormControl(0.0, Validators.required),
-      stock: new UntypedFormControl(0, Validators.required),
-      estado: new UntypedFormControl(
-        null,
-        Validators.compose([
-          Validators.required,
-          Validators.minLength(1),
-          Validators.maxLength(1),
-        ])
-      ),
-    });
   }
 }
