@@ -1,7 +1,7 @@
 // Angular
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
-import { Validators, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
+import { Validators, UntypedFormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 //Servicios
 import { MessageService } from 'primeng/api';
@@ -18,12 +18,12 @@ export class LoginComponent implements OnInit {
   isLoginFailed = false;
   errorMessage = '';
   roles: string[] = [];
-  loginForm: FormGroup | undefined;
+  loginForm: UntypedFormGroup | undefined;
   constructor(
     private empleadoService: EmpleadoService,
     private router: Router,
     private tokenStorage: TokenStorageService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private messageService: MessageService
   ) {}
 
@@ -55,8 +55,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
-      username: new FormControl('', Validators.required),
-      password: new FormControl(
+      username: new UntypedFormControl('', Validators.required),
+      password: new UntypedFormControl(
         '',
         Validators.compose([Validators.required, Validators.minLength(3)])
       ),

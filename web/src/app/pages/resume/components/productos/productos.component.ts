@@ -1,7 +1,7 @@
 // Angular
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
-import { Validators, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
+import { Validators, UntypedFormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 // Servicios
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -18,12 +18,12 @@ export class ProductosComponent implements OnInit {
   producto: Producto = new Producto();
   productos: Producto[] = [];
   selectedProducto: Producto = null;
-  formProducto: FormGroup;
+  formProducto: UntypedFormGroup;
 
   constructor(
     private productoService: ProductoService,
     private router: Router,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private messageService: MessageService,
     private confirmationService: ConfirmationService
   ) {}
@@ -151,11 +151,11 @@ export class ProductosComponent implements OnInit {
   ngOnInit(): void {
     this.obtenerProductos();
     this.formProducto = this.fb.group({
-      idProducto: new FormControl(),
-      nombres: new FormControl(null, Validators.required),
-      precio: new FormControl(0.0, Validators.required),
-      stock: new FormControl(0, Validators.required),
-      estado: new FormControl(
+      idProducto: new UntypedFormControl(),
+      nombres: new UntypedFormControl(null, Validators.required),
+      precio: new UntypedFormControl(0.0, Validators.required),
+      stock: new UntypedFormControl(0, Validators.required),
+      estado: new UntypedFormControl(
         null,
         Validators.compose([
           Validators.required,

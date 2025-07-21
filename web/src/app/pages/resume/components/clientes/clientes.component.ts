@@ -1,7 +1,7 @@
 // Angular
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
-import { Validators, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
+import { Validators, UntypedFormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 // Servicios
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -18,12 +18,12 @@ export class ClientesComponent implements OnInit {
   clientes: Cliente[] = [];
   cliente: Cliente = new Cliente();
   selectedCliente: Cliente = null;
-  formCliente: FormGroup;
+  formCliente: UntypedFormGroup;
 
   constructor(
     private clienteService: ClienteService,
     private router: Router,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private messageService: MessageService,
     private confirmationService: ConfirmationService
   ) {}
@@ -153,11 +153,11 @@ export class ClientesComponent implements OnInit {
   ngOnInit(): void {
     this.obtenerClientes();
     this.formCliente = this.fb.group({
-      idCliente: new FormControl(),
-      dni: new FormControl(null, Validators.required),
-      nombres: new FormControl(null, Validators.required),
-      direccion: new FormControl(null, Validators.required),
-      estado: new FormControl(null, Validators.required),
+      idCliente: new UntypedFormControl(),
+      dni: new UntypedFormControl(null, Validators.required),
+      nombres: new UntypedFormControl(null, Validators.required),
+      direccion: new UntypedFormControl(null, Validators.required),
+      estado: new UntypedFormControl(null, Validators.required),
     });
   }
 }

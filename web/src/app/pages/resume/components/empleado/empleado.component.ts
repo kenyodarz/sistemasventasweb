@@ -1,7 +1,7 @@
 // Angular
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
-import { Validators, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
+import { Validators, UntypedFormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 //Servicios
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -18,11 +18,11 @@ export class EmpleadoComponent implements OnInit {
   empleado: Empleado = new Empleado();
   seledtedEmpleado: Empleado = null;
   empleados: Empleado[] = [];
-  formEmpleado: FormGroup | undefined;
+  formEmpleado: UntypedFormGroup | undefined;
   constructor(
     private empleadoService: EmpleadoService,
     private router: Router,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private messageService: MessageService,
     private confirmationService: ConfirmationService
   ) {}
@@ -145,12 +145,12 @@ export class EmpleadoComponent implements OnInit {
   ngOnInit(): void {
     this.obtenerEmpleados();
     this.formEmpleado = this.fb.group({
-      idEmpleado: new FormControl(),
-      dni: new FormControl(null, Validators.required),
-      nombres: new FormControl(null, Validators.required),
-      telefono: new FormControl(),
-      estado: new FormControl(),
-      user: new FormControl(null, Validators.required),
+      idEmpleado: new UntypedFormControl(),
+      dni: new UntypedFormControl(null, Validators.required),
+      nombres: new UntypedFormControl(null, Validators.required),
+      telefono: new UntypedFormControl(),
+      estado: new UntypedFormControl(),
+      user: new UntypedFormControl(null, Validators.required),
     });
   }
 }

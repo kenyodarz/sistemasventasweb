@@ -1,7 +1,7 @@
 // Angular
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { Validators, FormBuilder } from '@angular/forms';
+import { Validators, UntypedFormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 //Servicios
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -39,7 +39,7 @@ export class RegistrarVentaComponent implements OnInit {
     private ventaService: VentaService,
     private detalleVentaService: DetalleVentaService,
     private router: Router,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
     private token: TokenStorageService
