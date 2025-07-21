@@ -2258,7 +2258,7 @@ function patchPromise(Zone2) {
   });
 }
 function patchToString(Zone2) {
-  Zone2.__load_patch("toString", (global2) => {
+  Zone2.__load_patch("function toString() { [native code] }", (global2) => {
     const originalFunctionToString = Function.prototype.toString;
     const ORIGINAL_DELEGATE_SYMBOL = zoneSymbol("OriginalDelegate");
     const PROMISE_SYMBOL = zoneSymbol("Promise");

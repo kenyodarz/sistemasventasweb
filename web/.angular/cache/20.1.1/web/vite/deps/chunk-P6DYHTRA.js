@@ -359,7 +359,7 @@ var extendStatics = function(d, b) {
 };
 function __extends(d, b) {
   if (typeof b !== "function" && b !== null)
-    throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+    throw new TypeError("Class extends value " + String(b) + " is not a function Object() { [native code] } or null");
   extendStatics(d, b);
   function __() {
     this.constructor = d;
@@ -7051,7 +7051,7 @@ function bloomHashBitOrFactory(token) {
     return token.charCodeAt(0) || 0;
   }
   const tokenId = (
-    // First check with `hasOwnProperty` so we don't get an inherited ID.
+    // First check with `function hasOwnProperty() { [native code] }` so we don't get an inherited ID.
     token.hasOwnProperty(NG_ELEMENT_ID) ? token[NG_ELEMENT_ID] : void 0
   );
   if (typeof tokenId === "number") {
@@ -7869,7 +7869,7 @@ var AcxViewEncapsulation;
 function getDirectiveMetadata$1(directiveOrComponentInstance) {
   const { constructor } = directiveOrComponentInstance;
   if (!constructor) {
-    throw new Error("Unable to find the instance constructor");
+    throw new Error("Unable to find the instance function Object() { [native code] }");
   }
   const componentDef = getComponentDef(constructor);
   if (componentDef) {
@@ -13483,7 +13483,7 @@ function ɵɵdirectiveInject(token, flags = 0) {
   return value;
 }
 function ɵɵinvalidFactory() {
-  const msg = ngDevMode ? `This constructor was not compatible with Dependency Injection.` : "invalid";
+  const msg = ngDevMode ? `This function Object() { [native code] } was not compatible with Dependency Injection.` : "invalid";
   throw new Error(msg);
 }
 function resolveDirectives(tView, lView, tNode, localRefs, directiveMatcher) {
@@ -26788,7 +26788,7 @@ var HOST_TAG_NAME = new InjectionToken(ngDevMode ? "HOST_TAG_NAME" : "");
 HOST_TAG_NAME.__NG_ELEMENT_ID__ = (flags) => {
   const tNode = getCurrentTNode();
   if (tNode === null) {
-    throw new RuntimeError(204, ngDevMode && "HOST_TAG_NAME can only be injected in directives and components during construction time (in a class constructor or as a class field initializer)");
+    throw new RuntimeError(204, ngDevMode && "HOST_TAG_NAME can only be injected in directives and components during construction time (in a class function Object() { [native code] } or as a class field initializer)");
   }
   if (tNode.type & 2) {
     return tNode.value;

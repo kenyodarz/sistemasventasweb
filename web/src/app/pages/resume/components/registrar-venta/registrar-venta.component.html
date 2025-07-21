@@ -1,13 +1,13 @@
-<div class="p-d-flex">
-  <div class="p-sm-5">
+<div class="d-flex">
+  <div class="sm-5">
     <p-card>
-      <div class="p-fluid p-grid">
-        <div class="p-field p-col-12 p-grid">
-          <div class="p-col-12 p-mb-2">
+      <div class="fluid grid">
+        <div class="field col-12 grid">
+          <div class="col-12 mb-2">
             <p-chip label="Datos Cliente" icon="pi pi-user"></p-chip>
           </div>
-          <div class="p-col-5">
-            <div class="p-fluid">
+          <div class="col-5">
+            <div class="fluid">
               <div class="p-inputgroup">
                 <span class="p-inputgroup-addon"
                   ><i class="pi pi-angle-right"></i
@@ -28,9 +28,9 @@
               </div>
             </div>
           </div>
-          <div class="p-col-7">
-            <div class="p-fluid">
-              <div class="p-field">
+          <div class="col-7">
+            <div class="fluid">
+              <div class="field">
                 <input
                   id="firstname1"
                   [(ngModel)]="nombreCliente"
@@ -42,12 +42,12 @@
             </div>
           </div>
         </div>
-        <div class="p-field p-col-12 p-grid">
-          <div class="p-col-12 p-mb-2">
+        <div class="field col-12 grid">
+          <div class="col-12 mb-2">
             <p-chip label="Datos Producto" icon="pi pi-briefcase"></p-chip>
           </div>
-          <div class="p-col-5">
-            <div class="p-fluid">
+          <div class="col-5">
+            <div class="fluid">
               <div class="p-inputgroup">
                 <span class="p-inputgroup-addon"
                   ><i class="pi pi-angle-right"></i
@@ -69,9 +69,9 @@
               </div>
             </div>
           </div>
-          <div class="p-col-7">
-            <div class="p-fluid">
-              <div class="p-field">
+          <div class="col-7">
+            <div class="fluid">
+              <div class="field">
                 <input
                   id="producto"
                   type="text"
@@ -82,8 +82,8 @@
               </div>
             </div>
           </div>
-          <div class="p-col-5">
-            <div class="p-fluid">
+          <div class="col-5">
+            <div class="fluid">
               <div class="p-inputgroup">
                 <span class="p-inputgroup-addon">$</span>
                 <input
@@ -97,9 +97,9 @@
               </div>
             </div>
           </div>
-          <div class="p-col-3">
-            <div class="p-fluid">
-              <div class="p-field">
+          <div class="col-3">
+            <div class="fluid">
+              <div class="field">
                 <p-inputNumber
                   mode="decimal"
                   [showButtons]="true"
@@ -113,8 +113,8 @@
               </div>
             </div>
           </div>
-          <div class="p-col-4">
-            <div class="p-fluid">
+          <div class="col-4">
+            <div class="fluid">
               <div class="p-inputgroup">
                 <span class="p-inputgroup-addon">
                   <i class="pi pi-tag"></i>
@@ -130,9 +130,9 @@
             </div>
           </div>
         </div>
-        <div class="p-field p-col-12 p-grid">
-          <div class="p-col-6">
-            <div class="p-fluid">
+        <div class="field col-12 grid">
+          <div class="col-6">
+            <div class="fluid">
               <button
                 pButton
                 pRipple
@@ -149,14 +149,14 @@
       </div>
     </p-card>
   </div>
-  <div class="p-sm-7">
+  <div class="sm-7">
     <p-card>
-      <div class="p-fluid">
-        <div class="p-field p-grid">
-          <label for="numeroSerie" class="p-col-12 p-mb-2 p-md-3 p-mb-md-0"
+      <div class="fluid">
+        <div class="field grid">
+          <label for="numeroSerie" class="col-12 mb-2 md-3 mb-md-0"
             >Numero Serie:
           </label>
-          <div class="p-col-12 p-md-9">
+          <div class="col-12 md-9">
             <input
               id="numeroSerie"
               [(ngModel)]="numeroSerie"
@@ -213,7 +213,7 @@
           </tr>
         </ng-template>
         <ng-template pTemplate="summary">
-          <div class="p-field p-grid p-jc-end">
+          <div class="field grid jc-end">
             <button
               pButton
               pRipple
@@ -228,12 +228,12 @@
               pRipple
               type="button"
               label="Cancelar"
-              class="p-button-outlined p-ml-1 p-button-danger"
+              class="button-outlined ml-1 button-danger"
             ></button>
             <p-inputNumber
               [(ngModel)]="total"
               disabled
-              class="p-ml-1 p-inputtext-lg"
+              class="ml-1 inputtext-lg"
               inputId="locale-us"
               mode="currency"
               locale="en-US"
