@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.4.2</version>
+        <version>3.5.3</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.bykenyodarz</groupId>
@@ -14,8 +14,8 @@
     <name>sistemasventasweb</name>
     <description>Demo API Sistema de Ventas</description>
     <properties>
-        <java.version>11</java.version>
-        <kotlin.version>1.4.21</kotlin.version>
+        <java.version>21</java.version>
+        <kotlin.version>1.9.25</kotlin.version>
     </properties>
     <dependencies>
         <dependency>
@@ -40,7 +40,7 @@
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-stdlib-jdk8</artifactId>
+            <artifactId>kotlin-stdlib</artifactId>
         </dependency>
 
         <dependency>
@@ -50,9 +50,9 @@
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <scope>runtime</scope>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>9.3.0</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

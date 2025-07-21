@@ -1,4 +1,4 @@
---CREATE DATABASE bd_ventas
+# --CREATE DATABASE bd_ventas
 
 CREATE TABLE `cliente` (
     `IdCliente` int(11) UNSIGNED NOT NULL,

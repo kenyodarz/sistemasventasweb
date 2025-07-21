@@ -6,8 +6,8 @@ import com.bykenyodarz.sistemasventasweb.services.apis.ClienteServiceAPI
 import com.bykenyodarz.sistemasventasweb.shared.GenericServiceImpl
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Service
-import javax.transaction.Transactional
-import javax.validation.constraints.NotNull
+import jakarta.transaction.Transactional
+import jakarta.validation.constraints.NotNull
 
 @Service
 class ClienteServiceImpl(repository: ClienteRepository) : GenericServiceImpl<Cliente, Int>(), ClienteServiceAPI {

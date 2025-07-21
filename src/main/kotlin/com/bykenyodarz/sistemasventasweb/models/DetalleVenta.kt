@@ -1,6 +1,6 @@
 package com.bykenyodarz.sistemasventasweb.models
 
-import javax.persistence.*
+import jakarta.persistence.*
 
 @Entity
 @Table(name = "detalle_ventas")

@@ -10,7 +10,7 @@ import org.springframework.validation.FieldError
 import org.springframework.web.bind.annotation.*
 import java.io.Serializable
 import java.util.function.Consumer
-import javax.validation.Valid
+import jakarta.validation.Valid
 
 @RestController
 abstract class GenericRestController<T, ID : Serializable>(val serviceAPI: GenericServiceAPI<T, ID>) {
