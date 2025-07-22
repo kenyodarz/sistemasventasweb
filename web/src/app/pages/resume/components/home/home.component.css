@@ -48,7 +48,7 @@
 .card .top-text .name{
   font-size: 25px;
   font-weight: 600;
-  color: #202020;
+  color: black;
 }
 
 .card .top-text p{
@@ -74,6 +74,7 @@
 
 .card .bottom-text .text{
   text-align: justify;
+  color: black;
 }
 
 .card .bottom-text .btn{

@@ -5,19 +5,19 @@ import { TokenStorageService } from 'src/app/core/services/token-storage.service
 import { RouterModule } from '@angular/router';
 import { MenubarModule } from 'primeng/menubar';
 import { MenuModule } from 'primeng/menu';
-import { ButtonModule } from 'primeng/button'; // también necesario por pButton
+import { ButtonModule } from 'primeng/button';
 
 
 @Component({
   selector: 'app-resume',
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    MenubarModule,
-    MenuModule, // ✅ Necesario para <p-menu>
-    ButtonModule, // ✅ Necesario para pButton
-  ],
+    imports: [
+        CommonModule,
+        RouterModule,
+        MenubarModule,
+        MenuModule, // ✅ Necesario para <p-menu>
+        ButtonModule,
+    ],
   templateUrl: './resume.component.html',
   styleUrls: ['./resume.component.css'],
 })

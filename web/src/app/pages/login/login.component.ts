@@ -44,11 +44,11 @@ export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
 
   constructor(
-    private empleadoService: EmpleadoService,
-    private router: Router,
-    private tokenStorage: TokenStorageService,
-    private fb: FormBuilder,
-    private messageService: MessageService
+    private readonly empleadoService: EmpleadoService,
+    private readonly router: Router,
+    private readonly tokenStorage: TokenStorageService,
+    private readonly fb: FormBuilder,
+    private readonly messageService: MessageService
   ) {}
 
   ngOnInit(): void {

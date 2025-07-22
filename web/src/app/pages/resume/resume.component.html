@@ -19,20 +19,20 @@
       <a [routerLink]="['ventas']" routerLinkActive="active">Nueva Venta</a>
     </li>
     <li>
-      <button
-        type="button"
-        id="btn_usuario"
-        pButton
-        pRipple 
-        icon="pi pi-user"
-        [label]="[usuario]"
-        (click)="menu.toggle($event)"
-        class="p-button-outlined"
-      ></button>
+      <p-button
+              class="btn_usuario"
+              type="button"
+              id="btn_usuario"
+              icon="pi pi-user"
+              severity="contrast"
+              (onClick)="menu.toggle($event)"
+              label="{{usuario}}"
+              [rounded]="true" [text]="true"
+      />
       <p-menu #menu [popup]="true" [model]="items"></p-menu>
     </li>
   </ul>
 </nav>
 <section>
-  <router-outlet></router-outlet>
+    <router-outlet></router-outlet>
 </section>
