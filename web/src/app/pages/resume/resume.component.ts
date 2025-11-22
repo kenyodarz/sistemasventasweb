@@ -25,7 +25,7 @@ export class ResumeComponent implements OnInit {
   items: MenuItem[];
   usuario: string = '';
 
-  constructor(private token: TokenStorageService) {}
+  constructor(private readonly token: TokenStorageService) {}
 
   loginOut() {
     this.token.signOut();
