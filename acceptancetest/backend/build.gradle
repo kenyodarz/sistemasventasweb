@@ -1,0 +1,43 @@
+plugins {
+    id 'java'
+}
+
+ext {
+    karateVersion = "1.4.1"
+    cucumberReportVersion = "5.5.3"
+    swaggerRequestValidatorVersion = "2.27.1"
+    commonsCodecVersion = "1.15"
+    rhinoVersion = "1.7.14"
+    fasterxmlJacksonCoreVersion = "2.13.2.2"
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation "com.intuit.karate:karate-junit5:${karateVersion}"
+    testImplementation "net.masterthought:cucumber-reporting:${cucumberReportVersion}"
+    testImplementation "com.atlassian.oai:swagger-request-validator-core:${swaggerRequestValidatorVersion}"
+    testImplementation "commons-codec:commons-codec:${commonsCodecVersion}"
+    testImplementation "org.mozilla:rhino:${rhinoVersion}"
+    testImplementation "com.fasterxml.jackson.core:jackson-databind:${fasterxmlJacksonCoreVersion}"
+    testImplementation "org.junit.platform:junit-platform-launcher:1.10.1"
+}
+
+test {
+    useJUnitPlatform()
+    systemProperty "karate.options", System.properties.getProperty("karate.options")
+    systemProperty "karate.env", System.properties.getProperty("karate.env")
+    outputs.upToDateWhen { false }
+    testLogging {
+        showStandardStreams = true
+        events "passed", "skipped", "failed"
+    }
+}
