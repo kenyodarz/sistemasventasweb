@@ -80,6 +80,13 @@ export class RegistrarVentaComponent implements OnInit {
     this.obtenerNumeroSerie();
   }
 
+  /**
+   * Realiza la búsqueda de un cliente utilizando su número de DNI.
+   * Si la consulta es exitosa, guarda el cliente y actualiza el formulario.
+   * En caso de error, muestra una notificación toast y limpia los datos.
+   *
+   * @param dni El número de Documento Nacional de Identidad del cliente.
+   */
   buscarClientePorDNI(dni: string) {
     this.clienteService.encontrarClientePorDNI(dni).subscribe({
       next: (cliente: Cliente) => {
@@ -100,6 +107,12 @@ export class RegistrarVentaComponent implements OnInit {
     });
   }
 
+  /**
+   * Obtiene la información de un producto por su ID, validando que tenga stock disponible.
+   * Si el producto cuenta con existencias, inicializa la cantidad de compra en 1.
+   *
+   * @param id El ID del producto a buscar.
+   */
   obtenerProducto(id: number) {
     if (id !== null && id !== 0) {
       this.productoService.obtenerProductoConStock(id).subscribe({
@@ -129,6 +142,11 @@ export class RegistrarVentaComponent implements OnInit {
       .subscribe((w) => (this.numeroSerie = w.numero));
   }
 
+  /**
+   * Añade el producto seleccionado a la lista de ventas temporales.
+   * Calcula el subtotal basándose en el precio y la cantidad, actualiza el monto total,
+   * y limpia el producto seleccionado para la próxima entrada.
+   */
   onAgregarProducto() {
     let nuevaVenta: NuevaVenta = new NuevaVenta();
     nuevaVenta.id = this.producto.idProducto;
@@ -158,6 +176,12 @@ export class RegistrarVentaComponent implements OnInit {
     });
   }
 
+  /**
+   * Procesa el registro final de la venta en el backend.
+   * Asocia el cliente, el empleado que realiza la venta, el número de serie
+   * y el monto acumulado. Al guardarse, añade los detalles de la venta y
+   * actualiza el stock físico de cada producto.
+   */
   onGenerarVenta() {
     let venta = new Venta();
     let empleado: Empleado = this.token.obtenerUsuario();

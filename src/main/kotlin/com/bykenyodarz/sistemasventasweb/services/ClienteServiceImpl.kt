@@ -9,6 +9,13 @@ import org.springframework.stereotype.Service
 import jakarta.transaction.Transactional
 import jakarta.validation.constraints.NotNull
 
+/**
+ * Implementación del servicio para la gestión de la entidad Cliente.
+ * Extiende de [GenericServiceImpl] para heredar el comportamiento CRUD básico
+ * e implementa [ClienteServiceAPI] para definir operaciones específicas de negocio.
+ *
+ * @property repository El repositorio específico de acceso a datos para clientes.
+ */
 @Service
 class ClienteServiceImpl(repository: ClienteRepository) : GenericServiceImpl<Cliente, Int>(), ClienteServiceAPI {
 
@@ -22,6 +29,12 @@ class ClienteServiceImpl(repository: ClienteRepository) : GenericServiceImpl<Cli
         return this.repository
     }
 
+    /**
+     * Busca un cliente en el sistema utilizando su número de DNI.
+     *
+     * @param dni El Documento Nacional de Identidad del cliente.
+     * @return El objeto [Cliente] asociado al DNI, o `null` si no se encuentra registrado.
+     */
     @NotNull
     @Transactional
     override fun findByDni(dni: String): Cliente? {
