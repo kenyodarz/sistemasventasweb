@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { RouterModule, Router } from '@angular/router';
 import {
   FormsModule,
@@ -39,7 +39,6 @@ import { NuevaVenta } from 'src/app/core/models/nueva-venta';
   templateUrl: './registrar-venta.component.html',
   styleUrls: ['./registrar-venta.component.css'],
   imports: [
-    CommonModule,
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
@@ -50,8 +49,8 @@ import { NuevaVenta } from 'src/app/core/models/nueva-venta';
     TableModule,
     CardModule,
     InputNumberModule,
-    ChipModule,
-  ],
+    ChipModule
+],
   providers: [ConfirmationService, MessageService],
 })
 export class RegistrarVentaComponent implements OnInit {
@@ -66,15 +65,15 @@ export class RegistrarVentaComponent implements OnInit {
   numeroSerie: string;
 
   constructor(
-    private clienteService: ClienteService,
-    private productoService: ProductoService,
-    private ventaService: VentaService,
-    private detalleVentaService: DetalleVentaService,
-    private router: Router,
-    private fb: UntypedFormBuilder,
-    private messageService: MessageService,
-    private confirmationService: ConfirmationService,
-    private token: TokenStorageService
+    private readonly clienteService: ClienteService,
+    private readonly productoService: ProductoService,
+    private readonly ventaService: VentaService,
+    private readonly detalleVentaService: DetalleVentaService,
+    private readonly router: Router,
+    private readonly fb: UntypedFormBuilder,
+    private readonly messageService: MessageService,
+    private readonly confirmationService: ConfirmationService,
+    private readonly token: TokenStorageService
   ) {}
 
   ngOnInit(): void {
@@ -82,13 +81,13 @@ export class RegistrarVentaComponent implements OnInit {
   }
 
   buscarClientePorDNI(dni: string) {
-    this.clienteService.encontrarClientePorDNI(dni).subscribe(
-      (cliente: Cliente) => {
+    this.clienteService.encontrarClientePorDNI(dni).subscribe({
+      next: (cliente: Cliente) => {
         this.cliente = cliente;
         this.dni = cliente.dni;
         this.nombreCliente = cliente.nombres;
       },
-      (err) => {
+      error: (err) => {
         this.messageService.add({
           severity: 'error',
           summary: '¡¡¡Error!!!',
@@ -98,20 +97,20 @@ export class RegistrarVentaComponent implements OnInit {
         this.nombreCliente = '';
         this.cliente = null;
       }
-    );
+    });
   }
 
   obtenerProducto(id: number) {
     if (id !== null && id !== 0) {
-      this.productoService.obtenerProductoConStock(id).subscribe(
-        (producto) => {
+      this.productoService.obtenerProductoConStock(id).subscribe({
+        next: (producto) => {
           this.producto = producto;
           this.idProducto = producto.idProducto;
           if (producto.stock > 0) {
             this.cantidadProducto = 1;
           }
         },
-        (err: any) => {
+        error: (err: any) => {
           this.messageService.add({
             severity: 'error',
             summary: '¡¡¡Error!!!',
@@ -120,7 +119,7 @@ export class RegistrarVentaComponent implements OnInit {
           this.idProducto = null;
           this.producto = new Producto();
         }
-      );
+      });
     }
   }
 

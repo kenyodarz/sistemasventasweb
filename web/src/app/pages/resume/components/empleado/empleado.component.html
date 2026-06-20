@@ -11,192 +11,199 @@
                 type="text"
                 formControlName="dni"
                 placeholder="Requerido"
-              />
-              <p-message
-                severity="error"
-                text="El DNI es requerido"
-                *ngIf="
+                />
+                @if (
                   !formEmpleado.controls['dni'].valid &&
                   formEmpleado.controls['dni'].dirty
-                "
-              ></p-message>
+                  ) {
+                  <p-message
+                    severity="error"
+                    text="El DNI es requerido"
+                  ></p-message>
+                }
+              </div>
+              <div>
+                <div>Nombres *</div>
+                <input
+                  pInputText
+                  type="text"
+                  formControlName="nombres"
+                  placeholder="Requerido"
+                  />
+                  @if (
+                    !formEmpleado.controls['nombres'].valid &&
+                    formEmpleado.controls['nombres'].dirty
+                    ) {
+                    <p-message
+                      severity="error"
+                      text="Ingrese el nombre completo del empleado"
+                    ></p-message>
+                  }
+                </div>
+                <div>
+                  <div>Telefono *</div>
+                  <input
+                    pInputText
+                    type="text"
+                    formControlName="telefono"
+                    placeholder="Requerido"
+                    />
+                    @if (
+                      !formEmpleado.controls['telefono'].valid &&
+                      formEmpleado.controls['telefono'].dirty
+                      ) {
+                      <p-message
+                        severity="error"
+                        text="telefono"
+                      ></p-message>
+                    }
+                  </div>
+                  <div>
+                    <div>Estado *</div>
+                    <input
+                      pInputText
+                      type="text"
+                      formControlName="estado"
+                      placeholder="Requerido"
+                      />
+                      @if (
+                        !formEmpleado.controls['estado'].valid &&
+                        formEmpleado.controls['estado'].dirty
+                        ) {
+                        <p-message
+                          severity="error"
+                          text="estado"
+                        ></p-message>
+                      }
+                    </div>
+                    <div>
+                      <div>Usuario *</div>
+                      <input
+                        pInputText
+                        type="text"
+                        formControlName="user"
+                        placeholder="Requerido"
+                        />
+                        @if (
+                          !formEmpleado.controls['user'].valid &&
+                          formEmpleado.controls['user'].dirty
+                          ) {
+                          <p-message
+                            severity="error"
+                            text="Debe ingresar un usuario"
+                          ></p-message>
+                        }
+                      </div>
+                    </div>
+                  </form>
+                  <ng-template pTemplate="footer">
+                    <p-button
+                      icon="pi pi-check"
+                      (click)="onGuardar()"
+                      (keydown.enter)="onGuardar()"
+                      label="Aceptar"
+                      [disabled]="!formEmpleado.valid"
+                    ></p-button>
+                    <p-button
+                      id="cancelarbtn"
+                      label="Cancelar"
+                      (click)="onCancelar()"
+                      (keydown.enter)="onCancelar()"
+                      icon="pi pi-times"
+                      styleClass="p-button-secondary"
+                      >
+                    </p-button>
+                  </ng-template>
+                </p-card>
+              </div>
             </div>
-            <div>
-              <div>Nombres *</div>
-              <input
-                pInputText
-                type="text"
-                formControlName="nombres"
-                placeholder="Requerido"
-              />
-              <p-message
-                severity="error"
-                text="Ingrese el nombre completo del empleado"
-                *ngIf="
-                  !formEmpleado.controls['nombres'].valid &&
-                  formEmpleado.controls['nombres'].dirty
-                "
-              ></p-message>
-            </div>
-            <div>
-              <div>Telefono *</div>
-              <input
-                pInputText
-                type="text"
-                formControlName="telefono"
-                placeholder="Requerido"
-              />
-              <p-message
-                severity="error"
-                text="telefono"
-                *ngIf="
-                  !formEmpleado.controls['telefono'].valid &&
-                  formEmpleado.controls['telefono'].dirty
-                "
-              ></p-message>
-            </div>
-            <div>
-              <div>Estado *</div>
-              <input
-                pInputText
-                type="text"
-                formControlName="estado"
-                placeholder="Requerido"
-              />
-              <p-message
-                severity="error"
-                text="estado"
-                *ngIf="
-                  !formEmpleado.controls['estado'].valid &&
-                  formEmpleado.controls['estado'].dirty
-                "
-              ></p-message>
-            </div>
-            <div>
-              <div>Usuario *</div>
-              <input
-                pInputText
-                type="text"
-                formControlName="user"
-                placeholder="Requerido"
-              />
-              <p-message
-                severity="error"
-                text="Debe ingresar un usuario"
-                *ngIf="
-                  !formEmpleado.controls['user'].valid &&
-                  formEmpleado.controls['user'].dirty
-                "
-              ></p-message>
-            </div>
-          </div>
-        </form>
-        <ng-template pTemplate="footer">
-          <p-button
-            icon="pi pi-check"
-            (click)="onGuardar()"
-            label="Aceptar"
-            [disabled]="!formEmpleado.valid"
-          ></p-button>
-          <p-button
-            id="cancelarbtn"
-            label="Cancelar"
-            (click)="onCancelar()"
-            icon="pi pi-times"
-            styleClass="p-button-secondary"
-          >
-          </p-button>
-        </ng-template>
-      </p-card>
-    </div>
-  </div>
-  <div class="col">
-    <div class="box">
-      <p-card>
-        <p-table
-          [value]="empleados"
-          #dt
-          [paginator]="true"
-          selectionMode="single"
-          [(selection)]="seledtedEmpleado"
-          dataKey="idEmpleado"
-          [rows]="10"
-          [resizableColumns]="true" 
-          columnResizeMode="expand" 
-          [tableStyle]="{ 'min-width': '50rem' }"
-          [globalFilterFields]="['dni', 'nombres', 'telefono', 'user']"
-        >
-          <ng-template pTemplate="caption">
-            <div style="text-align: right">
-              <i class="pi pi-search" style="margin: 4px 4px 0 0"></i>
-              <input
-                type="text"
-                pInputText
-                size="50"
-                placeholder="Buscar"
-                (input)="dt.filterGlobal($event.target.value, 'contains')"
-                style="width: auto"
-                class="p-inputtext-sm"
-              />
-            </div>
-          </ng-template>
-          <ng-template pTemplate="header">
-            <tr>
-              <th style="width: 3rem">#</th>
-              <th>DNI</th>
-              <th>Nombres</th>
-              <th>Telefono</th>
-              <th>Estado</th>
-              <th>Usuario</th>
-              <th style="width: 8rem">Acciones</th>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="body" let-rowIndex="rowIndex" let-empleado>
-            <tr [pSelectableRow]="empleado">
-              <td>{{ rowIndex + 1 }}</td>
-              <td>{{ empleado.dni }}</td>
-              <td>{{ empleado.nombres }}</td>
-              <td>{{ empleado.telefono }}</td>
-              <td>{{ empleado.estado }}</td>
-              <td>{{ empleado.user }}</td>
-              <td>
-                <button
-                  pButton
-                  pRipple
-                  type="button"
-                  icon="pi pi-pencil"
-                  (click)="onEditar(empleado)"
-                  class="p-button-rounded p-button-text p-button-info p-mr-2"
-                  styleClass="p-button-sm"
-                ></button>
-                <button
-                  pButton
-                  pRipple
-                  type="button"
-                  icon="pi pi-trash"
-                  class="p-button-rounded p-button-danger p-button-text"
-                  styleClass="p-button-sm"
-                  (click)="onEliminar(empleado)"
-                ></button>
-              </td>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="summary">
-            <div style="text-align: left">
-              Empleado Seleccionado:
-              {{
-                seledtedEmpleado
-                  ? seledtedEmpleado.dni +
-                    " - " +
-                    seledtedEmpleado.nombres +
-                    " " +
-                    seledtedEmpleado.telefono
-                  : "Ninguno"
-              }}
-            </div>
-          </ng-template>
-        </p-table></p-card
-      >
-    </div>
-  </div>
-</div>
+            <div class="col">
+              <div class="box">
+                <p-card>
+                  <p-table
+                    [value]="empleados"
+                    #dt
+                    [paginator]="true"
+                    selectionMode="single"
+                    [(selection)]="seledtedEmpleado"
+                    dataKey="idEmpleado"
+                    [rows]="10"
+                    [resizableColumns]="true"
+                    columnResizeMode="expand"
+                    [tableStyle]="{ 'min-width': '50rem' }"
+                    [globalFilterFields]="['dni', 'nombres', 'telefono', 'user']"
+                    >
+                    <ng-template pTemplate="caption">
+                      <div style="text-align: right">
+                        <i class="pi pi-search" style="margin: 4px 4px 0 0"></i>
+                        <input
+                          type="text"
+                          pInputText
+                          size="50"
+                          placeholder="Buscar"
+                          (input)="dt.filterGlobal($event.target.value, 'contains')"
+                          style="width: auto"
+                          class="p-inputtext-sm"
+                          />
+                        </div>
+                      </ng-template>
+                      <ng-template pTemplate="header">
+                        <tr>
+                          <th style="width: 3rem" scope="col">#</th>
+                          <th scope="col">DNI</th>
+                          <th scope="col">Nombres</th>
+                          <th scope="col">Telefono</th>
+                          <th scope="col">Estado</th>
+                          <th scope="col">Usuario</th>
+                          <th style="width: 8rem" scope="col">Acciones</th>
+                        </tr>
+                      </ng-template>
+                      <ng-template pTemplate="body" let-rowIndex="rowIndex" let-empleado>
+                        <tr [pSelectableRow]="empleado">
+                          <td>{{ rowIndex + 1 }}</td>
+                          <td>{{ empleado.dni }}</td>
+                          <td>{{ empleado.nombres }}</td>
+                          <td>{{ empleado.telefono }}</td>
+                          <td>{{ empleado.estado }}</td>
+                          <td>{{ empleado.user }}</td>
+                          <td>
+                            <button
+                              pButton
+                              pRipple
+                              type="button"
+                              icon="pi pi-pencil"
+                              (click)="onEditar(empleado)"
+                              class="p-button-rounded p-button-text p-button-info p-mr-2"
+                              styleClass="p-button-sm"
+                            ></button>
+                            <button
+                              pButton
+                              pRipple
+                              type="button"
+                              icon="pi pi-trash"
+                              class="p-button-rounded p-button-danger p-button-text"
+                              styleClass="p-button-sm"
+                              (click)="onEliminar(empleado)"
+                            ></button>
+                          </td>
+                        </tr>
+                      </ng-template>
+                      <ng-template pTemplate="summary">
+                        <div style="text-align: left">
+                          Empleado Seleccionado:
+                          {{
+                          seledtedEmpleado
+                          ? seledtedEmpleado.dni +
+                          " - " +
+                          seledtedEmpleado.nombres +
+                          " " +
+                          seledtedEmpleado.telefono
+                          : "Ninguno"
+                          }}
+                        </div>
+                      </ng-template>
+                    </p-table></p-card
+                    >
+                  </div>
+                </div>
+              </div>

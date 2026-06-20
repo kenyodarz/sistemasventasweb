@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import {
   UntypedFormGroup,
   UntypedFormControl,
@@ -22,12 +22,12 @@ import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 import { CardModule } from 'primeng/card';
+import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'app-empleado',
   standalone: true,
   imports: [
-    CommonModule,
     FormsModule,
     ReactiveFormsModule,
     TableModule,
@@ -37,7 +37,8 @@ import { CardModule } from 'primeng/card';
     ConfirmDialogModule,
     ToastModule,
     CardModule,
-  ],
+    MessageModule
+],
   providers: [MessageService, ConfirmationService],
   templateUrl: './empleado.component.html',
   styleUrls: ['./empleado.component.css'],
@@ -49,11 +50,11 @@ export class EmpleadoComponent implements OnInit {
   formEmpleado: UntypedFormGroup | undefined;
 
   constructor(
-    private empleadoService: EmpleadoService,
-    private router: Router,
-    private fb: UntypedFormBuilder,
-    private messageService: MessageService,
-    private confirmationService: ConfirmationService
+    private readonly empleadoService: EmpleadoService,
+    private readonly router: Router,
+    private readonly fb: UntypedFormBuilder,
+    private readonly messageService: MessageService,
+    private readonly confirmationService: ConfirmationService
   ) {}
 
   ngOnInit(): void {
@@ -70,7 +71,8 @@ export class EmpleadoComponent implements OnInit {
 
   obtenerEmpleados() {
     this.empleadoService.getAll().subscribe((array: Empleado[]) => {
-      this.empleados = array.sort((a, b) => a.nombres.localeCompare(b.nombres));
+      array.sort((a, b) => a.nombres.localeCompare(b.nombres));
+      this.empleados = array;
     });
   }
 
@@ -89,28 +91,23 @@ export class EmpleadoComponent implements OnInit {
     const index = this.empleados.findIndex(
       (e) => e.idEmpleado === empleado.idEmpleado
     );
-    if (index !== -1) {
-      this.empleados[index] = empleado;
-    } else {
+    if (index === -1) {
       this.empleados.push(empleado);
+    } else {
+      this.empleados[index] = empleado;
     }
     this.formEmpleado.reset();
   }
 
-  guardarEditarEmpleado(editar: Boolean) {
-    if (editar) {
-      if (this.seledtedEmpleado?.idEmpleado != null) {
-        this.formEmpleado.patchValue(this.seledtedEmpleado);
-      } else {
-        this.messageService.add({
-          severity: 'warn',
-          summary: '¡¡¡Advertencia!!!',
-          detail: 'No ha seleccionado ningun empleado',
-        });
-        return;
-      }
+  cargarEmpleadoParaEditar() {
+    if (this.seledtedEmpleado?.idEmpleado == null) {
+      this.messageService.add({
+        severity: 'warn',
+        summary: '¡¡¡Advertencia!!!',
+        detail: 'No ha seleccionado ningun empleado',
+      });
     } else {
-      this.empleado = new Empleado();
+      this.formEmpleado.patchValue(this.seledtedEmpleado);
     }
   }
 
@@ -157,7 +154,7 @@ export class EmpleadoComponent implements OnInit {
 
   onEditar(empleado: Empleado) {
     this.seledtedEmpleado = empleado;
-    this.guardarEditarEmpleado(true);
+    this.cargarEmpleadoParaEditar();
   }
 
   onCancelar() {

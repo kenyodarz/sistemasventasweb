@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { MenuItem } from 'primeng/api';
 import { TokenStorageService } from 'src/app/core/services/token-storage.service';
 import { RouterModule } from '@angular/router';
@@ -12,12 +12,11 @@ import { ButtonModule } from 'primeng/button';
   selector: 'app-resume',
   standalone: true,
     imports: [
-        CommonModule,
-        RouterModule,
-        MenubarModule,
-        MenuModule, // ✅ Necesario para <p-menu>
-        ButtonModule,
-    ],
+    RouterModule,
+    MenubarModule,
+    MenuModule,
+    ButtonModule
+],
   templateUrl: './resume.component.html',
   styleUrls: ['./resume.component.css'],
 })

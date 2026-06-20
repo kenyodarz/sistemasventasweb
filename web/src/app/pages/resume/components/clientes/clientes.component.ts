@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import {
   UntypedFormGroup,
   UntypedFormControl,
@@ -23,12 +23,12 @@ import { ClienteService } from 'src/app/core/services/cliente.service';
 // Modelos
 import { Cliente } from 'src/app/core/models/cliente';
 import { CardModule } from 'primeng/card';
+import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'app-clientes',
   standalone: true,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     TableModule,
     InputTextModule,
@@ -37,7 +37,8 @@ import { CardModule } from 'primeng/card';
     ConfirmDialogModule,
     ToastModule,
     CardModule,
-  ],
+    MessageModule
+],
   templateUrl: './clientes.component.html',
   styleUrls: ['./clientes.component.css'],
   providers: [ConfirmationService, MessageService],
@@ -49,11 +50,11 @@ export class ClientesComponent implements OnInit {
   formCliente: UntypedFormGroup;
 
   constructor(
-    private clienteService: ClienteService,
-    private router: Router,
-    private fb: UntypedFormBuilder,
-    private messageService: MessageService,
-    private confirmationService: ConfirmationService
+    private readonly clienteService: ClienteService,
+    private readonly router: Router,
+    private readonly fb: UntypedFormBuilder,
+    private readonly messageService: MessageService,
+    private readonly confirmationService: ConfirmationService
   ) {}
 
   ngOnInit(): void {
@@ -73,9 +74,10 @@ export class ClientesComponent implements OnInit {
       array.forEach((element) => {
         clienteList.push(element);
       });
-      this.clientes = clienteList.sort((a, b) =>
+      clienteList.sort((a, b) =>
         a.nombres.localeCompare(b.nombres)
       );
+      this.clientes = clienteList;
     });
   }
 
@@ -104,25 +106,23 @@ export class ClientesComponent implements OnInit {
     const index = this.clientes.findIndex(
       (e) => e.idCliente === cliente.idCliente
     );
-    if (index !== -1) {
-      this.clientes[index] = cliente;
-    } else {
+    if (index === -1) {
       this.clientes.push(cliente);
+    } else {
+      this.clientes[index] = cliente;
     }
     this.formCliente.reset();
   }
 
-  guardarEditarCliente(editar: boolean) {
-    if (editar) {
-      if (this.selectedCliente?.idCliente != null) {
-        this.formCliente.patchValue(this.selectedCliente);
-      } else {
-        this.messageService.add({
-          severity: 'warn',
-          summary: '¡¡¡Advertencia!!!',
-          detail: 'No ha seleccionado ningún cliente',
-        });
-      }
+  cargarClienteParaEditar() {
+    if (this.selectedCliente?.idCliente == null) {
+      this.messageService.add({
+        severity: 'warn',
+        summary: '¡¡¡Advertencia!!!',
+        detail: 'No ha seleccionado ningún cliente',
+      });
+    } else {
+      this.formCliente.patchValue(this.selectedCliente);
     }
   }
 
@@ -165,7 +165,7 @@ export class ClientesComponent implements OnInit {
 
   onEditar(cliente: Cliente) {
     this.selectedCliente = cliente;
-    this.guardarEditarCliente(true);
+    this.cargarClienteParaEditar();
   }
 
   onCancelar() {

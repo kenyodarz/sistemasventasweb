@@ -18,6 +18,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { CardModule } from 'primeng/card';
+import { MessageModule } from 'primeng/message';
 
 // Servicios
 import { ProductoService } from 'src/app/core/services/producto.service';
@@ -39,6 +40,7 @@ import { CommonModule } from '@angular/common';
     ButtonModule,
     InputNumberModule,
     CardModule,
+    MessageModule,
   ],
   templateUrl: './productos.component.html',
   styleUrls: ['./productos.component.css'],
@@ -50,11 +52,11 @@ export class ProductosComponent implements OnInit {
   formProducto: FormGroup;
 
   constructor(
-    private productoService: ProductoService,
-    private router: Router,
-    private fb: FormBuilder,
-    private messageService: MessageService,
-    private confirmationService: ConfirmationService
+    private readonly productoService: ProductoService,
+    private readonly router: Router,
+    private readonly fb: FormBuilder,
+    private readonly messageService: MessageService,
+    private readonly confirmationService: ConfirmationService
   ) {}
 
   ngOnInit(): void {
@@ -62,7 +64,7 @@ export class ProductosComponent implements OnInit {
     this.formProducto = this.fb.group({
       idProducto: new FormControl(),
       nombres: new FormControl(null, Validators.required),
-      precio: new FormControl(0.0, Validators.required),
+      precio: new FormControl(0, Validators.required),
       stock: new FormControl(0, Validators.required),
       estado: new FormControl(
         null,
@@ -77,15 +79,16 @@ export class ProductosComponent implements OnInit {
 
   obtenerProductos(): void {
     this.productoService.getAll().subscribe((productosList: Producto[]) => {
-      this.productos = productosList.sort((a, b) =>
+      productosList.sort((a, b) =>
         a.nombres.localeCompare(b.nombres)
       );
+      this.productos = productosList;
     });
   }
 
   guardarProducto(): void {
-    this.productoService.save(this.producto).subscribe(
-      (producto) => {
+    this.productoService.save(this.producto).subscribe({
+      next: (producto) => {
         this.messageService.add({
           severity: 'success',
           summary: '¡Correcto!',
@@ -93,7 +96,7 @@ export class ProductosComponent implements OnInit {
         });
         this.validarProducto(producto);
       },
-      (err) => {
+      error: (err) => {
         console.error(err);
         this.messageService.add({
           severity: 'error',
@@ -101,35 +104,35 @@ export class ProductosComponent implements OnInit {
           detail: `${err.message}`,
         });
       }
-    );
+    });
   }
 
   validarProducto(producto: Producto) {
     const index = this.productos.findIndex(
       (e) => e.idProducto === producto.idProducto
     );
-    if (index !== -1) {
-      this.productos[index] = producto;
-    } else {
+    if (index === -1) {
       this.productos.push(producto);
+    } else {
+      this.productos[index] = producto;
     }
     this.formProducto.reset();
   }
 
   editarProducto() {
-    if (this.selectedProducto && this.selectedProducto.idProducto != null) {
-      this.formProducto.patchValue(this.selectedProducto);
-    } else {
+    if (this.selectedProducto?.idProducto == null) {
       this.messageService.add({
         severity: 'warn',
         summary: 'Advertencia',
         detail: 'No ha seleccionado ningún producto',
       });
+    } else {
+      this.formProducto.patchValue(this.selectedProducto);
     }
   }
 
   eliminarProducto() {
-    if (!this.selectedProducto || !this.selectedProducto.idProducto) {
+    if (!this.selectedProducto?.idProducto) {
       this.messageService.add({
         severity: 'warn',
         summary: 'Advertencia',

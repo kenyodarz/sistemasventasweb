@@ -8,7 +8,7 @@ import {
   FormsModule,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
+
 
 /* PrimeNG */
 import { ToastModule } from 'primeng/toast';
@@ -25,14 +25,13 @@ import { TokenStorageService } from 'src/app/core/services/token-storage.service
   selector: 'app-login',
   standalone: true,
   imports: [
-    CommonModule,
     FormsModule,
     ReactiveFormsModule,
     ToastModule,
     InputTextModule,
     PasswordModule,
-    ButtonModule,
-  ],
+    ButtonModule
+],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
@@ -62,8 +61,8 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    this.empleadoService.validarEmpleado(this.loginForm.value).subscribe(
-      (data) => {
+    this.empleadoService.validarEmpleado(this.loginForm.value).subscribe({
+      next: (data) => {
         this.tokenStorage.guardarToken(data.nombres);
         this.tokenStorage.guardarUsuario(data);
         this.isLoginFailed = false;
@@ -75,7 +74,7 @@ export class LoginComponent implements OnInit {
         });
         this.router.navigate(['/resume']);
       },
-      (err) => {
+      error: (err) => {
         this.errorMessage = err.error;
         this.isLoginFailed = true;
         this.messageService.add({
@@ -84,6 +83,6 @@ export class LoginComponent implements OnInit {
           detail: this.errorMessage,
         });
       }
-    );
+    });
   }
 }
