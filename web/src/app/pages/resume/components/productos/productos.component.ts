@@ -147,6 +147,7 @@ export class ProductosComponent implements OnInit {
         this.productoService
           .delete(this.selectedProducto.idProducto)
           .subscribe((producto: Producto) => {
+            console.log('HTTP Delete success, returned product:', producto);
             this.messageService.add({
               severity: 'info',
               summary: 'Información',
@@ -159,9 +160,12 @@ export class ProductosComponent implements OnInit {
   }
 
   validarEliminar(producto: Producto) {
+    console.log('Antes de filtrar. Total productos:', this.productos.length);
+    console.log('Filtro ID:', producto ? producto.idProducto : 'null');
     this.productos = this.productos.filter(
       (e) => e.idProducto !== producto.idProducto
     );
+    console.log('Después de filtrar. Total productos:', this.productos.length);
   }
 
   onEliminar(producto: Producto) {

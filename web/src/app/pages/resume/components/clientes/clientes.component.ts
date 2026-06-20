@@ -41,7 +41,6 @@ import { MessageModule } from 'primeng/message';
 ],
   templateUrl: './clientes.component.html',
   styleUrls: ['./clientes.component.css'],
-  providers: [ConfirmationService, MessageService],
 })
 export class ClientesComponent implements OnInit {
   clientes: Cliente[] = [];
@@ -141,6 +140,7 @@ export class ClientesComponent implements OnInit {
         this.clienteService
           .delete(this.selectedCliente.idCliente)
           .subscribe((cliente: Cliente) => {
+            console.log('HTTP Delete success, returned client:', cliente);
             this.messageService.add({
               severity: 'info',
               summary: 'Información',
@@ -153,9 +153,12 @@ export class ClientesComponent implements OnInit {
   }
 
   validarEliminar(cliente: Cliente) {
+    console.log('Antes de filtrar. Total clientes:', this.clientes.length);
+    console.log('Filtro ID:', cliente ? cliente.idCliente : 'null');
     this.clientes = this.clientes.filter(
       (c) => c.idCliente !== cliente.idCliente
     );
+    console.log('Después de filtrar. Total clientes:', this.clientes.length);
   }
 
   onEliminar(cliente: Cliente) {
