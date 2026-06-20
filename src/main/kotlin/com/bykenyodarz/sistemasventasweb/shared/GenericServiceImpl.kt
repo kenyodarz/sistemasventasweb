@@ -7,7 +7,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 @Service
-abstract class GenericServiceImpl<T, ID: Serializable>: GenericServiceAPI<T, ID> {
+abstract class GenericServiceImpl<T : Any, ID: Serializable>: GenericServiceAPI<T, ID> {
 
     override fun getAll(): List<T> {
         val returnList: MutableList<T> = ArrayList()
@@ -23,7 +23,7 @@ abstract class GenericServiceImpl<T, ID: Serializable>: GenericServiceAPI<T, ID>
     }
 
     override fun save(entity: T): T {
-        return getRepository().save(entity!!)
+        return getRepository().save(entity)
     }
 
     override fun delete(id: ID) {

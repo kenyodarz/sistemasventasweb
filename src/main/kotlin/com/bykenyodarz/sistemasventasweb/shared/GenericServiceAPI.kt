@@ -3,7 +3,7 @@ package com.bykenyodarz.sistemasventasweb.shared
 import org.springframework.data.jpa.repository.JpaRepository
 import java.io.Serializable
 
-interface GenericServiceAPI<T, ID : Serializable> {
+interface GenericServiceAPI<T : Any, ID : Serializable> {
 
     fun getAll(): List<T>
 
