@@ -4,46 +4,50 @@ import { LoginGuard } from 'src/app/guards/login.guard';
 import { TokenStorageService } from 'src/app/core/services/token-storage.service';
 
 describe('LoginGuard', () => {
-  let guard: LoginGuard;
-  let routerMock: jasmine.SpyObj<Router>;
-  let tokenStorageMock: jasmine.SpyObj<TokenStorageService>;
+    let guard: LoginGuard;
+    let routerMock: any;
+    let tokenStorageMock: any;
 
-  beforeEach(() => {
-    const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
-    const tokenStorageSpy = jasmine.createSpyObj('TokenStorageService', ['obtenerToken']);
+    beforeEach(() => {
+        const routerSpy = {
+            navigate: vi.fn().mockName("Router.navigate")
+        };
+        const tokenStorageSpy = {
+            obtenerToken: vi.fn().mockName("TokenStorageService.obtenerToken")
+        };
 
-    TestBed.configureTestingModule({
-      providers: [
-        LoginGuard,
-        { provide: Router, useValue: routerSpy },
-        { provide: TokenStorageService, useValue: tokenStorageSpy }
-      ]
+        TestBed.configureTestingModule({
+            providers: [
+                LoginGuard,
+                { provide: Router, useValue: routerSpy },
+                { provide: TokenStorageService, useValue: tokenStorageSpy }
+            ]
+        });
+
+        guard = TestBed.inject(LoginGuard);
+        routerMock = TestBed.inject(Router) as any;
+        tokenStorageMock = TestBed.inject(TokenStorageService) as any;
     });
 
-    guard = TestBed.inject(LoginGuard);
-    routerMock = TestBed.inject(Router) as jasmine.SpyObj<Router>;
-    tokenStorageMock = TestBed.inject(TokenStorageService) as jasmine.SpyObj<TokenStorageService>;
-  });
+    it('should be created', () => {
+        expect(guard).toBeTruthy();
+    });
 
-  it('should be created', () => {
-    expect(guard).toBeTruthy();
-  });
+    it('should return true and not navigate when token exists', () => {
+        tokenStorageMock.obtenerToken.mockReturnValue('valid-token');
 
-  it('should return true and not navigate when token exists', () => {
-    tokenStorageMock.obtenerToken.and.returnValue('valid-token');
+        const result = guard.canActivate();
 
-    const result = guard.canActivate();
+        expect(result).toBe(true);
+        expect(routerMock.navigate).not.toHaveBeenCalled();
+    });
 
-    expect(result).toBeTrue();
-    expect(routerMock.navigate).not.toHaveBeenCalled();
-  });
+    it('should return true and navigate to /login when token does not exist', () => {
+        tokenStorageMock.obtenerToken.mockReturnValue(null);
 
-  it('should return true and navigate to /login when token does not exist', () => {
-    tokenStorageMock.obtenerToken.and.returnValue(null);
+        const result = guard.canActivate();
 
-    const result = guard.canActivate();
-
-    expect(result).toBeTrue();
-    expect(routerMock.navigate).toHaveBeenCalledWith(['/login']);
-  });
+        expect(result).toBe(true);
+        expect(routerMock.navigate).toHaveBeenCalledWith(['/login']);
+    });
 });

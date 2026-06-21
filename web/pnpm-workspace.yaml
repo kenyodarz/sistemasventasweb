@@ -1,0 +1,6 @@
+# Configuración de pnpm para permitir la ejecución de scripts de compilación de dependencias (pnpm v11+)
+allowBuilds:
+  "@parcel/watcher": true
+  "esbuild": true
+  "lmdb": true
+  "msgpackr-extract": true
