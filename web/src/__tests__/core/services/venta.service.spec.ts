@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting, HttpTestingController } from '@angular/common/http/testing';
 import { VentaService } from 'src/app/core/services/venta.service';
 import { API_URL } from 'src/environments/environment';
 
@@ -9,8 +10,11 @@ describe('VentaService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [VentaService]
+      providers: [
+        VentaService,
+        provideHttpClient(),
+        provideHttpClientTesting()
+      ]
     });
     service = TestBed.inject(VentaService);
     httpMock = TestBed.inject(HttpTestingController);

@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting, HttpTestingController } from '@angular/common/http/testing';
 import { EmpleadoService } from 'src/app/core/services/empleado.service';
 import { Empleado } from 'src/app/core/models/empleado';
 import { API_URL } from 'src/environments/environment';
@@ -10,8 +11,11 @@ describe('EmpleadoService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [EmpleadoService]
+      providers: [
+        EmpleadoService,
+        provideHttpClient(),
+        provideHttpClientTesting()
+      ]
     });
     service = TestBed.inject(EmpleadoService);
     httpMock = TestBed.inject(HttpTestingController);

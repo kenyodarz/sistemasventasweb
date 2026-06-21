@@ -17,7 +17,8 @@
     "strict": false,
     "strictNullChecks": false,
     "strictPropertyInitialization": false,
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "types": ["vitest/globals", "node"]
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
