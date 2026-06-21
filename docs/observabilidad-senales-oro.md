@@ -24,7 +24,7 @@ graph TD
     Client[Cliente/Navegador] -->|HTTP Request| Controller[REST Controller]
     Aspect[GoldenSignalsAspect AOP] -->|Intercepta con @Around| Controller
     Aspect -->|Registra métricas| Micrometer[Micrometer Registry]
-    Micrometer -->|Expone datos| Actuator[/actuator/prometheus]
+    Micrometer -->|Expone datos| Actuator["/actuator/prometheus"]
     Micrometer -->|Trazas/Métricas OTLP| OTel[OpenTelemetry Collector]
     Prometheus[Prometheus Server] -->|Scrapea cada 5s| Actuator
     Grafana[Grafana Dashboard] -->|Consulta métricas| Prometheus
